@@ -1,0 +1,90 @@
+@import url("buttons.css");
+
+header {
+  display: flex;
+  align-items: center;
+  padding-left: 28px;
+  padding-right: 16px;
+  justify-content: space-between;
+}
+
+.header__menu-group {
+  display: flex;
+}
+
+.logo {
+  padding: 4px;
+}
+
+.logo__img {
+  width: 54px;
+  position: relative;
+  top: 7px;
+  left: -9px;
+}
+
+.header {
+  height: 75px;
+}
+
+.menu {
+  height: inherit;
+}
+
+.menu__list {
+  display: flex;
+  height: inherit;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  align-items: stretch;
+}
+
+.menu__link {
+  padding: 25px 20px;
+  text-decoration: none;
+  font-weight: 600;
+  color: inherit;
+  display: inline-block;
+}
+
+.menu__link:hover {
+  background-color: #04aa6d;
+  color: white;
+}
+
+.menu__arrow {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid black;
+  position: relative;
+  top: 15px;
+  left: 3px;
+}
+
+.header__btns-group {
+  display: flex;
+}
+
+.header-btns__list {
+  display: flex;
+  list-style-type: none;
+}
+
+.header-btns__item {
+  margin-right: 15px;
+}
+
+.header-btns__img {
+  width: 20px;
+  position: relative;
+  top: 3px;
+}
+
+.login__img {
+  width: 60px;
+  position: relative;
+  top: 5px;
+}

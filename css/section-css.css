@@ -1,0 +1,67 @@
+.css {
+  display: flex;
+  background-color: var(--yellow);
+  justify-content: space-between;
+  padding: 32px 0;
+}
+
+.css__btns {
+  padding: 42px 0;
+  text-align: center;
+  margin-left: 220px;
+}
+
+.css__h2 {
+  font-size: 100px;
+  margin: -20px 0;
+}
+
+.css__desc {
+  font-size: 19px;
+  margin: 1.2em 0;
+  font-weight: 600;
+}
+
+.css__list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.css__item {
+  margin-bottom: 25px;
+}
+
+.css__item a,
+.css__snippet-btn a {
+  width: 170px;
+}
+
+.css__preview {
+  padding: 30px 0;
+  margin-right: 50px;
+  width: 45%;
+}
+
+.css__snippet {
+  padding: 16px;
+  background-color: var(--gray);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.css__snippet-title {
+  margin: 10px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.css__snippet-img {
+  background: url(../images/code-css.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 300px;
+  margin: 15px 0;
+}

@@ -1,0 +1,15 @@
+body > * > * {
+  outline: 1px solid deeppink;
+}
+body > * > * > * {
+  outline: 1px dashed lime;
+  outline-offset: -1px;
+}
+body > * > * > * > * {
+  outline: 1px dotted dodgerblue;
+  outline-offset: -2px;
+}
+body > * > * > * > * > * {
+  outline: 1px solid orange;
+  outline-offset: -4px;
+}

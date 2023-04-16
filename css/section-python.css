@@ -1,0 +1,67 @@
+.python {
+  display: flex;
+  background-color: var(--light-pink);
+  justify-content: space-between;
+  padding: 50px 0 32px 0;
+}
+
+.python__btns {
+  padding: 42px 0;
+  text-align: center;
+  margin-left: 220px;
+}
+
+.python__h2 {
+  font-size: 80px;
+  margin: -20px 0;
+}
+
+.python__desc {
+  font-size: 19px;
+  margin: 1.2em 0;
+  font-weight: 600;
+}
+
+.python__list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.python__item {
+  margin-bottom: 25px;
+}
+
+.python__item a,
+.python__snippet-btn a {
+  width: 170px;
+}
+
+.python__preview {
+  padding: 30px 0;
+  margin-right: 50px;
+  width: 45%;
+}
+
+.python__snippet {
+  padding: 16px;
+  background-color: var(--gray);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.python__snippet-title {
+  margin: 10px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.python__snippet-img {
+  background: url(../images/code-python.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 220px;
+  margin: 15px 0;
+}

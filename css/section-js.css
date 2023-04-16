@@ -1,0 +1,70 @@
+.js {
+  display: flex;
+  background-color: var(--dark);
+  justify-content: space-between;
+  padding: 40px 0;
+}
+
+.js__btns {
+  padding: 42px 0;
+  text-align: center;
+  margin-left: 190px;
+}
+
+.js__h2 {
+  font-size: 70px;
+  margin: -20px 0;
+  color: white;
+  margin-bottom: 0;
+}
+
+.js__desc {
+  font-size: 19px;
+  margin: 1.2em 0;
+  font-weight: 600;
+  color: white;
+}
+
+.js__list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.js__item {
+  margin-bottom: 25px;
+}
+
+.js__item a,
+.js__snippet-btn a {
+  width: 170px;
+}
+
+.js__preview {
+  padding: 25px 0;
+  margin-right: 50px;
+  width: 45%;
+}
+
+.js__snippet {
+  padding: 16px;
+  background-color: var(--gray);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.js__snippet-title {
+  margin: 10px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.js__snippet-img {
+  background: url(../images/code-js.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 230px;
+  margin: 15px 0;
+}

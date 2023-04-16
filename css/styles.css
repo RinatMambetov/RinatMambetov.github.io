@@ -1,0 +1,41 @@
+/* @import url("outline.css"); */
+
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+@import url("buttons.css");
+
+@import url("header.css");
+@import url("footer.css");
+@import url("section-learntocode.css");
+@import url("section-html.css");
+@import url("section-css.css");
+@import url("section-js.css");
+@import url("section-python.css");
+@import url("section-sql.css");
+
+:root {
+  --purple: #9763f6;
+  --pink: #ffc0c7;
+  --light-pink: #f3ecea;
+  --yellow: #fff4a3;
+  --green: #04aa6d;
+  --light-green: #d9eee1;
+  --dark: #282a35;
+  --gray: #e7e9eb;
+  --aqua: #96d4d4;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", "Verdana", sans-serif;
+  line-height: 1.5;
+  font-size: 18px;
+}
+
+.svg-wave {
+  margin-bottom: -10px;
+}

@@ -1,0 +1,41 @@
+.btn-link {
+  padding: 8px 16px;
+  border-radius: 30px;
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-link:hover {
+  filter: brightness(95%);
+}
+
+.btn-link_purple {
+  background-color: var(--purple);
+  color: white;
+}
+
+.btn-link_pink {
+  background-color: var(--pink);
+}
+
+.btn-link_yellow {
+  background-color: var(--yellow);
+}
+
+.btn-link_green {
+  background-color: var(--green);
+  color: white;
+}
+
+.btn-link_black {
+  background-color: var(--dark);
+  color: white;
+}
+
+.btn-link_white {
+  background-color: white;
+  color: black;
+}

@@ -1,0 +1,88 @@
+.learntocode {
+  text-align: center;
+  background-color: var(--dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.learntocode__content {
+  margin: 0 12px;
+  padding: 90px;
+}
+
+.learntocode__links {
+  display: flex;
+  justify-content: end;
+}
+
+.learntocode__link:hover {
+  background-color: black;
+}
+
+.learntocode__icon {
+  padding: 16px;
+  color: white;
+}
+
+.learntocode__h1 {
+  font-size: 70px;
+  font-weight: 700;
+  color: white;
+  margin-top: 2px;
+  margin-bottom: -20px;
+}
+
+.learntocode__h3 {
+  font-size: 23px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.learntocode__h3_pink {
+  color: var(--pink);
+}
+
+.learntocode__form {
+  margin: 0 360px;
+  display: flex;
+}
+
+.learntocode__form-input {
+  padding: 12px;
+  padding-left: 25px;
+  font-size: 17px;
+  width: 80%;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 25px 0 0 25px;
+  border: 1px solid var(--dark);
+  border-right: 1px solid var(--green);
+  outline: 0;
+}
+
+.learntocode__form-button {
+  padding: 12px;
+  font-size: 17px;
+  width: 20%;
+  color: white;
+  border: 1px solid var(--dark);
+  cursor: pointer;
+  background: var(--green);
+  border-radius: 0 25px 25px 0;
+  border-left: 1px solid var(--green);
+}
+
+.learntocode__form-button:hover {
+  filter: brightness(90%);
+}
+
+.learntocode__link,
+.learntocode__h3-link {
+  color: white;
+}
+
+.learntocode__h3-link:hover {
+  color: var(--green);
+  background-color: var(--dark);
+}
