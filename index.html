@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,356 +10,330 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>W3Schools Online Web Tutorials</title>
+    <title>YouTube</title>
   </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <div class="header__menu-group">
-          <div class="logo">
-            <a class="logo__link" href="#">
-              <img class="logo__img" src="images/w3.png" alt="w3" />
+  <body class="body">
+    <header class="header">
+      <div class="menu-group">
+        <div class="menu-group__burger"></div>
+        <div class="menu-group__logo"></div>
+      </div>
+      <div class="search-group">
+        <form action="#" class="search-group__form">
+          <input
+            type="search"
+            class="search-group__search"
+            placeholder="Введите запрос"
+          />
+          <a href="#" class="search-group__keyboard">
+            <i class="fa-regular fa-keyboard"></i>
+          </a>
+          <button
+            type="submit"
+            class="search-group__submit"
+            title="Введите запрос"
+          >
+            <i class="fa-solid fa-magnifying-glass submit-icon"></i>
+          </button>
+        </form>
+        <a href="#" class="search-group__voice" title="Голосовой поиск">
+          <i class="fa-solid fa-microphone"></i>
+        </a>
+      </div>
+      <div class="account-group">
+        <ul class="account-group__list">
+          <li class="account-group__item" title="Создать">
+            <a href="#" class="account-group__link">
+              <i class="fa-solid fa-square-plus account-group__make"></i>
             </a>
-          </div>
-          <nav class="menu">
-            <ul class="menu__list">
-              <li class="menu__item">
-                <a href="#" class="menu__link"
-                  >Tutorials
-                  <span class="menu__arrow"></span>
-                </a>
-              </li>
-              <li class="menu__item">
-                <a href="#" class="menu__link"
-                  >References
-                  <span class="menu__arrow"></span>
-                </a>
-              </li>
-              <li class="menu__item">
-                <a href="#" class="menu__link"
-                  >Exercises
-                  <span class="menu__arrow"></span>
-                </a>
-              </li>
-              <li class="menu__item">
-                <a href="#" class="menu__link">Bootcamp</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="header__btns-group">
-          <div class="header-btns">
-            <ul class="header-btns__list">
-              <li class="header-btns__item">
-                <a href="#" class="btn-link btn-link_purple">
-                  <img
-                    class="header-btns__img"
-                    src="images/stars.png"
-                    alt="stars"
-                  />
-                  Upgrade</a
-                >
-              </li>
-              <li class="header-btns__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-              <li class="header-btns__item">
-                <a href="#" class="btn-link btn-link_yellow">Create Website</a>
-              </li>
-              <li class="header-btns__item">
-                <a href="#" class="btn-link btn-link_green">Spaces</a>
-              </li>
-            </ul>
-          </div>
-          <div class="login">
-            <a href="#" class="login__link">
-              <img class="login__img" src="images/login.png" alt="login" />
+          </li>
+          <li class="account-group__item" title="Уведомления">
+            <a href="#" class="account-group__link">
+              <i class="fa-regular fa-bell account-group__notify"></i>
             </a>
-          </div>
-        </div>
-      </header>
-
-      <main class="main">
-        <section class="learntocode">
-          <div class="learntocode__links">
-            <a href="#" class="learntocode__link">
-              <i class="fa-solid fa-circle-half-stroke learntocode__icon"></i>
-            </a>
-            <a href="#" class="learntocode__link">
-              <i class="fa-solid fa-earth-americas learntocode__icon"></i>
-            </a>
-            <a href="#" class="learntocode__link">
-              <i class="fa-solid fa-magnifying-glass learntocode__icon"></i>
-            </a>
-          </div>
-          <div class="learntocode__content">
-            <h1 class="learntocode__h1">Learn to Code</h1>
-            <h3 class="learntocode__h3 learntocode__h3_pink">
-              With the world's largest web developer site.
-            </h3>
-            <form action="#" class="learntocode__form">
-              <input
-                class="learntocode__form-input"
-                type="text"
-                placeholder="Search our tutorials, e.g. HTML"
+          </li>
+          <li class="account-group__item">
+            <a href="#" class="account-group__link">
+              <img
+                class="account-group__account"
+                src="https://picsum.photos/32"
+                alt="account"
               />
-              <button class="learntocode__form-button" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-            <h3 class="learntocode__h3">
-              <a class="learntocode__h3-link" href="#">
-                Not Sure Where To Begin?
-              </a>
-            </h3>
-          </div>
-        </section>
-
-        <svg
-          class="svg-wave"
-          style="background-color: #d9eee1"
-          width="100%"
-          height="70"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path
-            id="wavepath"
-            d="M0,0  L110,0C35,150 35,0 0,100z"
-            fill="#282A35"
-          ></path>
-        </svg>
-
-        <section class="html">
-          <div class="html__btns">
-            <h2 class="html__h2">HTML</h2>
-            <div class="html__desc">The language for building web pages</div>
-            <ul class="html__list">
-              <li class="html__item">
-                <a href="#" class="btn-link btn-link_green">Learn HTML</a>
-              </li>
-              <li class="html__item">
-                <a href="#" class="btn-link btn-link_yellow">Video Tutorial</a>
-              </li>
-              <li class="html__item">
-                <a href="#" class="btn-link btn-link_black">HTML Reference</a>
-              </li>
-              <li class="html__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-            </ul>
-          </div>
-          <div class="html__preview">
-            <div class="html__snippet">
-              <div class="html__snippet-title">HTML Example:</div>
-              <div class="html__snippet-img"></div>
-              <div class="html__snippet-btn">
-                <a href="#" class="btn-link btn-link_green">Try it Yourself</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="css">
-          <div class="css__btns">
-            <h2 class="css__h2">CSS</h2>
-            <div class="css__desc">The language for styling web pages</div>
-            <ul class="css__list">
-              <li class="css__item">
-                <a href="#" class="btn-link btn-link_green">Learn CSS</a>
-              </li>
-              <li class="css__item">
-                <a href="#" class="btn-link btn-link_black">CSS Reference</a>
-              </li>
-              <li class="css__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-            </ul>
-          </div>
-          <div class="css__preview">
-            <div class="css__snippet">
-              <div class="css__snippet-title">CSS Example:</div>
-
-              <div class="css__snippet-img"></div>
-              <div class="css__snippet-btn">
-                <a href="#" class="btn-link btn-link_green">Try it Yourself</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="js">
-          <div class="js__btns">
-            <h2 class="js__h2">JavaScript</h2>
-            <div class="js__desc">The language for programming web pages</div>
-            <ul class="js__list">
-              <li class="js__item">
-                <a href="#" class="btn-link btn-link_green">Learn JavaScript</a>
-              </li>
-              <li class="js__item">
-                <a href="#" class="btn-link btn-link_white"
-                  >JavaScript Reference</a
-                >
-              </li>
-              <li class="js__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-            </ul>
-          </div>
-          <div class="js__preview">
-            <div class="js__snippet">
-              <div class="js__snippet-title">JavaScript Example:</div>
-              <div class="js__snippet-img"></div>
-              <div class="js__snippet-btn">
-                <a href="#" class="btn-link btn-link_green">Try it Yourself</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="python">
-          <div class="python__btns">
-            <h2 class="python__h2">Python</h2>
-            <div class="python__desc">A popular programming language</div>
-            <ul class="python__list">
-              <li class="python__item">
-                <a href="#" class="btn-link btn-link_green">Learn Python</a>
-              </li>
-              <li class="python__item">
-                <a href="#" class="btn-link btn-link_black">Python Reference</a>
-              </li>
-              <li class="python__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-            </ul>
-          </div>
-          <div class="python__preview">
-            <div class="python__snippet">
-              <div class="python__snippet-title">Python Example:</div>
-              <div class="python__snippet-img"></div>
-              <div class="python__snippet-btn">
-                <a href="#" class="btn-link btn-link_green">Try it Yourself</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="sql">
-          <div class="sql__btns">
-            <h2 class="sql__h2">SQL</h2>
-            <div class="sql__desc">A language for accessing databases</div>
-            <ul class="sql__list">
-              <li class="sql__item">
-                <a href="#" class="btn-link btn-link_green">Learn SQL</a>
-              </li>
-              <li class="sql__item">
-                <a href="#" class="btn-link btn-link_black">SQL Reference</a>
-              </li>
-              <li class="sql__item">
-                <a href="#" class="btn-link btn-link_pink">Get Certified</a>
-              </li>
-            </ul>
-          </div>
-          <div class="sql__preview">
-            <div class="sql__snippet">
-              <div class="sql__snippet-title">SQL Example:</div>
-              <div class="sql__snippet-img"></div>
-              <div class="sql__snippet-btn">
-                <a href="#" class="btn-link btn-link_green">Try it Yourself</a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer">
-        <nav class="footer-nav">
-          <div class="footer-btns">
-            <ul class="footer-btns__list">
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">QUIZZES</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">EXERCISES</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">CERTIFICATES</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">UPGRADE</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">SPACES</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">SUPPORT</a>
-              </li>
-              <li class="footer-btns__item">
-                <a href="#" class="footer-btns__link">NEWSLETTER</a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-links">
-            <ul class="footer-links__list">
-              <li class="footer-links__item">
-                <a href="#" class="footer-links__link">FORUM</a>
-              </li>
-              <span class="footer-links__separator">|</span>
-              <li class="footer-links__item">
-                <a href="#" class="footer-links__link">ABOUT</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <div class="footer-socials">
-          <ul class="footer-socials__list">
-            <li class="footer-socials__item">
-              <a href="#" class="footer-socials__link">
-                <i
-                  class="fa-brands fa-square-facebook footer-socials__icon"
-                ></i>
-              </a>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div class="wrapper">
+      <div class="aside"></div>
+      <main class="main">
+        <nav class="main__nav">
+          <ul class="main-nav__list">
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link_active">Все</a>
             </li>
-            <li class="footer-socials__item">
-              <a href="#" class="footer-socials__link">
-                <i class="fa-brands fa-instagram footer-socials__icon"></i>
-              </a>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Видеоигры</a>
             </li>
-            <li class="footer-socials__item">
-              <a href="#" class="footer-socials__link">
-                <i class="fa-brands fa-linkedin footer-socials__icon"></i>
-              </a>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Сейчас в эфире</a>
             </li>
-            <li class="footer-socials__item">
-              <a href="#" class="footer-socials__link">
-                <i class="fa-brands fa-discord footer-socials__icon"></i>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Музыка</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Джемы</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Математика</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Фитнес</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Туризм</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Экшен и приключения</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__link">Ремесла</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="#" class="main-nav__arrow">
+                <i class="fa-solid fa-chevron-right"></i>
               </a>
             </li>
           </ul>
-        </div>
+        </nav>
 
-        <div class="footer-desc">
-          <p class="footer-desc__text">
-            W3Schools is optimized for learning, testing, and training. Examples
-            might be simplified to improve reading and basic understanding.
-            Tutorials, references, and examples are constantly reviewed to avoid
-            errors, but we cannot warrant full correctness of all content. While
-            using this site, you agree to have read and accepted our
-            <a class="footer-desc__link" href="#">terms of use,</a>
-            <a href="#" class="footer-desc__link">cookie and privacy policy</a>.
-            <br />
-            <a href="#" class="footer-desc__link">Copyright 1999-2023</a> by
-            Refsnes Data. All Rights Reserved.
-          </p>
+        <div class="cards-wrapper">
+          <ul class="cards">
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cards-item">
+              <div class="thumb">
+                <img
+                  src="https://picsum.photos/360/203"
+                  alt="thumb"
+                  class="thumb-img"
+                />
+                <div class="duration-time">2:18:01</div>
+              </div>
+              <div class="desc">
+                <a href="#" class="desc-avatar">
+                  <img
+                    src="https://picsum.photos/36"
+                    alt="avatar"
+                    class="desc-avatar__img"
+                  />
+                </a>
+                <div class="desc-text">
+                  <a href="#" class="desc-title">
+                    Lorem ipsum dolor sit amet
+                  </a>
+                  <div class="desc-author">
+                    <a href="#" class="desc-author-text">Lorem, ipsum</a>
+                    <a href="#" class="desc-author-check" title="Подтверждено">
+                      <i class="fa-solid fa-circle-check check-icon"></i>
+                    </a>
+                  </div>
+                  <div class="desc-data">
+                    <a href="#" class="data-viewing">Lorem, ipsum dolor.</a>
+                    <a href="#" class="data-point">
+                      <i class="fa-solid fa-circle data-point-icon"></i>
+                    </a>
+                    <a href="#" class="data-date">Lorem, ipsum dolor.</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-
-        <div class="footer-icon">
-          <a href="#" class="footer-icon__link">
-            <i class="fa-regular fa-thumbs-up footer-icon__icon"></i>
-          </a>
-        </div>
-      </footer>
+      </main>
     </div>
   </body>
 </html>
