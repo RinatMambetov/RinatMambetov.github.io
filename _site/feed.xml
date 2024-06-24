@@ -1,17 +1,403 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-22T18:23:32+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2024/06/22/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2024-06-22T18:18:05+03:00</published><updated>2024-06-22T18:18:05+03:00</updated><id>http://localhost:4000/jekyll/update/2024/06/22/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2024/06/22/welcome-to-jekyll.html"><![CDATA[<p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-24T20:19:13+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My blog about Java</title><subtitle>Dive into the world of Java and programming with my latest blog post</subtitle><author><name>Rinat Mambetov</name></author><entry><title type="html">Руководство по Java 8 Stream API</title><link href="http://localhost:4000/java/stream/2024/06/21/java-stream.html" rel="alternate" type="text/html" title="Руководство по Java 8 Stream API" /><published>2024-06-21T18:18:05+03:00</published><updated>2024-06-21T18:18:05+03:00</updated><id>http://localhost:4000/java/stream/2024/06/21/java-stream</id><content type="html" xml:base="http://localhost:4000/java/stream/2024/06/21/java-stream.html"><![CDATA[<p>В этом руководстве рассматривается практическое использование Java 8 Streams от создания до параллельного выполнения.</p>
 
-<p>Jekyll requires blog post files to be named according to the following format:</p>
+<p>Чтобы понять этот материал, читателям необходимо иметь базовые знания о Java 8 (лямбда-выражения, Optional, ссылки на методы).</p>
 
-<p><code class="language-plaintext highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+<h2 id="1-создание-потока">1. Создание потока</h2>
 
-<p>Where <code class="language-plaintext highlighter-rouge">YEAR</code> is a four-digit number, <code class="language-plaintext highlighter-rouge">MONTH</code> and <code class="language-plaintext highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="language-plaintext highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>В Java существует множество способов создания экземпляра потока из различных источников данных.</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>После создания экземпляра потока, он не изменяет исходный источник данных. Это означает, что любые операции, выполняемые над потоком (например, фильтрация, маппинг, сортировка), не влияют на сам исходный набор данных. Это обеспечивает безопасность данных и предотвращает нежелательные побочные эффекты.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<p>Благодаря тому, что потоки не модифицируют исходные данные, из одного и того же источника можно создать несколько потоков. Это позволяет одновременно выполнять различные операции обработки данных над одним и тем же набором данных без изменения исходных данных.</p>
 
-<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.]]></summary></entry></feed>
+<h3 id="11-пустой-поток">1.1. Пустой поток</h3>
+
+<p>Мы должны использовать метод <code class="language-plaintext highlighter-rouge">empty()</code> для создания пустого потока:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamEmpty</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Мы часто используем метод <code class="language-plaintext highlighter-rouge">empty()</code> при создании, чтобы избежать возврата null для потоков без элементов:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">streamOf</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">list</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">list</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span> <span class="o">?</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">empty</span><span class="o">()</span> <span class="o">:</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="12-поток-коллекции">1.2. Поток коллекции</h3>
+
+<p>Мы также можем создать поток из любого типа коллекции:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Collection</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">collection</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="s">"c"</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfCollection</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="na">stream</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h3 id="13-поток-массива">1.3. Поток массива</h3>
+
+<p>Массив также может быть источником потока:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfArray</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="s">"c"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Мы также можем создать Stream из существующего массива или части массива:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]{</span><span class="s">"a"</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="s">"c"</span><span class="o">};</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfArrayFull</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfArrayPart</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="c1">// "b" "c"</span>
+</code></pre></div></div>
+
+<h3 id="14-streambuilder">1.4. Stream.builder()</h3>
+
+<p>Желаемый тип должен быть дополнительно указан в правой части инструкции, когда используется Builder, в противном случае метод <code class="language-plaintext highlighter-rouge">build()</code> создаст экземпляр <code class="language-plaintext highlighter-rouge">Stream&lt;Object&gt;</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamBuilder</span> <span class="o">=</span>
+  <span class="nc">Stream</span><span class="o">.&lt;</span><span class="nc">String</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"a"</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="s">"b"</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="s">"c"</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h3 id="15-streamgenerate">1.5. Stream.generate()</h3>
+
+<p>Метод <code class="language-plaintext highlighter-rouge">generate()</code> принимает <code class="language-plaintext highlighter-rouge">Supplier&lt;T&gt;</code> для генерации элемента. Поскольку результирующий поток бесконечен, разработчик должен указать желаемый размер, иначе метод generate() будет работать до тех пор, пока не достигнет предела памяти:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamGenerated</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">generate</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">"element"</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Приведенный выше код создает последовательность из десяти строк со значением “element”.</p>
+
+<h3 id="16-streamiterate">1.6. Stream.iterate()</h3>
+
+<p>Другой способ создания бесконечного потока - это использование метода <code class="language-plaintext highlighter-rouge">iterate()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">streamIterated</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">iterate</span><span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Первый элемент результирующего stream является первым параметром метода <code class="language-plaintext highlighter-rouge">iterate()</code>. При создании каждого следующего элемента указанная функция применяется к предыдущему элементу. В приведенном выше примере вторым элементом будет 42.</p>
+
+<h3 id="17-поток-примитивов">1.7. Поток примитивов</h3>
+
+<p>Java 8 предлагает возможность создавать потоки из трех примитивных типов: int, long и double. Поскольку <code class="language-plaintext highlighter-rouge">Stream&lt;T&gt;</code> является универсальным интерфейсом, и нет способа использовать примитивы в качестве параметра типа с generics, были созданы три новых специальных интерфейса: IntStream, LongStream, DoubleStream.</p>
+
+<p>Использование новых интерфейсов устраняет ненужную автоматическую упауовку, что позволяет повысить производительность:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntStream</span> <span class="n">intStream</span> <span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="nc">LongStream</span> <span class="n">longStream</span> <span class="o">=</span> <span class="nc">LongStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Метод <code class="language-plaintext highlighter-rouge">range(int startInclusive, int endExclusive)</code> создает упорядоченный поток от первого параметра ко второму параметру. Оно увеличивает значение последующих элементов с шагом, равным 1. Результат не включает последний параметр, это просто верхняя граница последовательности.</p>
+
+<p>Метод <code class="language-plaintext highlighter-rouge">rangeClosed(int startInclusive, int endInclusive)</code>  выполняет то же самое, только с одним отличием, включен второй элемент. Мы можем использовать эти два метода для генерации любого из трех типов потоков примитивов.</p>
+
+<p>Начиная с Java 8, класс Random предоставляет широкий спектр методов для генерации потоков примитивов. Например, следующий код создает DoubleStream, который состоит из трех элементов:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">();</span>
+<span class="nc">DoubleStream</span> <span class="n">doubleStream</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="na">doubles</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h3 id="18-поток-строк">1.8. Поток строк</h3>
+
+<p>Мы также можем использовать String в качестве источника для создания потока с помощью метода <code class="language-plaintext highlighter-rouge">chars()</code> класса String. Поскольку в JDK нет интерфейса для CharStream, мы используем IntStream вместо этого для представления потока символов.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntStream</span> <span class="n">streamOfChars</span> <span class="o">=</span> <span class="s">"abc"</span><span class="o">.</span><span class="na">chars</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Следующий пример разбивает строку на подстроки в соответствии с указанным регулярным выражением:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfString</span> <span class="o">=</span>
+  <span class="nc">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">", "</span><span class="o">).</span><span class="na">splitAsStream</span><span class="o">(</span><span class="s">"a, b, c"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h3 id="19-поток-файлов">1.9. Поток файлов</h3>
+
+<p>Кроме того, Java NIO класс Files позволяет нам генерировать <code class="language-plaintext highlighter-rouge">Stream&lt;String&gt;</code> текстового файла с помощью метода <code class="language-plaintext highlighter-rouge">lines()</code>. Каждая строка текста становится элементом потока:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Path</span> <span class="n">path</span> <span class="o">=</span> <span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"C:\\file.txt"</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfStrings</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="n">path</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamWithCharset</span> <span class="o">=</span>
+  <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="nc">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Кодировка может быть указана в качестве аргумента метода <code class="language-plaintext highlighter-rouge">lines()</code>.</p>
+
+<h2 id="2-ссылка-на-поток">2. Ссылка на поток</h2>
+
+<p>Мы можем создать экземпляр потока и иметь доступную ссылку на него, если вызываются только промежуточные операции. Выполнение терминальной операции делает поток недоступным.</p>
+
+<p>Чтобы продемонстрировать это, мы ненадолго забудем, что наилучшей практикой является объединение последовательности операций в цепочку. Помимо ненужной многословности, технически следующий код допустим:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span>
+  <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="s">"c"</span><span class="o">).</span><span class="na">filter</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"b"</span><span class="o">));</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">anyElement</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="na">findAny</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Однако попытка повторно использовать ту же ссылку после вызова операции терминала вызовет исключение IllegalStateException:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">firstElement</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="na">findFirst</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Поскольку исключение IllegalStateException является исключением RuntimeException, компилятор не будет сигнализировать о проблеме. Поэтому очень важно помнить, что потоки Java 8 нельзя использовать повторно.</p>
+
+<p>Такое поведение логично. Мы создали Stream для применения конечной последовательности операций к источнику элементов в функциональном стиле, а не для хранения элементов.</p>
+
+<p>Итак, чтобы предыдущий код работал должным образом, необходимо внести некоторые изменения:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">elements</span> <span class="o">=</span>
+  <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="s">"c"</span><span class="o">).</span><span class="na">filter</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"b"</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">anyElement</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">findAny</span><span class="o">();</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">firstElement</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">findFirst</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="3-потоковый-конвейер">3. Потоковый конвейер</h2>
+
+<p>Для выполнения последовательности операций над элементами источника данных и агрегирования их результатов нам понадобятся три части: исходный код, промежуточные операции и терминальная операция.</p>
+
+<p>Промежуточные операции возвращают новый измененный поток. Например, чтобы создать новый поток вместо существующего без нескольких элементов, следует использовать метод <code class="language-plaintext highlighter-rouge">skip()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">onceModifiedStream</span> <span class="o">=</span>
+  <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"abcd"</span><span class="o">,</span> <span class="s">"bbcd"</span><span class="o">,</span> <span class="s">"cbcd"</span><span class="o">).</span><span class="na">skip</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Если нам нужно больше одной модификации, мы можем связать промежуточные операции. Давайте предположим, что нам также нужно заменить каждый элемент текущего <code class="language-plaintext highlighter-rouge">Stream&lt;String&gt;</code> подстрокой из первых нескольких символов. Мы можем сделать это, объединив методы <code class="language-plaintext highlighter-rouge">skip()</code> и <code class="language-plaintext highlighter-rouge">map()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">twiceModifiedStream</span> <span class="o">=</span>
+  <span class="n">stream</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">map</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Поток сам по себе ничего не стоит; пользователя интересует результат операции терминала, который может быть значением некоторого типа или действием, применяемым к каждому элементу потока. Мы можем использовать только одну терминальную операцию для каждого потока.</p>
+
+<p>Правильный и наиболее удобный способ использования потоков - это конвейер потока, который представляет собой цепочку из источника потока, промежуточных операций и терминальной операции:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"abc1"</span><span class="o">,</span> <span class="s">"abc2"</span><span class="o">,</span> <span class="s">"abc3"</span><span class="o">);</span>
+<span class="kt">long</span> <span class="n">size</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">skip</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">)).</span><span class="na">sorted</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="4-отложенный-вызов">4. Отложенный вызов</h2>
+
+<p>Промежуточные операции являются ленивыми. Это означает, что они будут вызываться только в том случае, если это необходимо для выполнения терминальной операции.</p>
+
+<p>Например, давайте вызовем метод <code class="language-plaintext highlighter-rouge">wasCalled()</code>, который увеличивает внутренний счетчик при каждом вызове:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">long</span> <span class="n">counter</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">wasCalled</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">counter</span><span class="o">++;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Теперь давайте вызовем метод <code class="language-plaintext highlighter-rouge">wasCalled()</code> из операции <code class="language-plaintext highlighter-rouge">filter()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"abc1"</span><span class="o">,</span> <span class="s">"abc2"</span><span class="o">,</span> <span class="s">"abc3"</span><span class="o">);</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">wasCalled</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"2"</span><span class="o">);</span>
+<span class="o">});</span>
+</code></pre></div></div>
+
+<p>Поскольку у нас есть источник из трех элементов, мы можем предположить, что метод <code class="language-plaintext highlighter-rouge">filter()</code> будет вызван три раза, а значение переменной counter будет равно 3. Однако выполнение этого кода вообще не изменяет счетчик , он по-прежнему равен нулю, поэтому метод <code class="language-plaintext highlighter-rouge">filter()</code> даже не был вызван ни разу. Причина, это отсутствие терминальной операции.</p>
+
+<p>Давайте немного перепишем этот код, добавив операцию <code class="language-plaintext highlighter-rouge">map()</code> и терминальную операцию, <code class="language-plaintext highlighter-rouge">findFirst()</code>. Мы также добавим возможность отслеживать порядок вызовов методов с помощью ведения журнала:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"filter() was called"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"2"</span><span class="o">);</span>
+<span class="o">}).</span><span class="na">map</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"map() was called"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">();</span>
+<span class="o">}).</span><span class="na">findFirst</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Результирующий журнал показывает, что мы дважды вызывали метод <code class="language-plaintext highlighter-rouge">filter()</code> и один раз метод <code class="language-plaintext highlighter-rouge">map()</code>. Это потому, что конвейер выполняется вертикально. В нашем примере первый элемент stream не удовлетворял предикату filter. Затем мы вызвали метод <code class="language-plaintext highlighter-rouge">filter()</code> для второго элемента, который прошел фильтр. Не вызывая <code class="language-plaintext highlighter-rouge">filter()</code> для третьего элемента, мы перешли по конвейеру к методу <code class="language-plaintext highlighter-rouge">map()</code>.</p>
+
+<p>Операция <code class="language-plaintext highlighter-rouge">findFirst()</code> удовлетворяет только одному элементу. Итак, в этом конкретном примере отложенный вызов позволил нам избежать двух вызовов метода, одного для <code class="language-plaintext highlighter-rouge">filter()</code> (для третьего элемента) и одного для <code class="language-plaintext highlighter-rouge">map()</code> (для первого элемента).</p>
+
+<h2 id="5-порядок-выполнения">5. Порядок выполнения</h2>
+
+<p>С точки зрения производительности, правильный порядок является одним из наиболее важных аспектов операций объединения в цепочку в конвейере stream:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="n">size</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">wasCalled</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="o">}).</span><span class="na">skip</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="na">count</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Выполнение этого кода увеличит значение счетчика на три. Это означает, что мы вызвали метод stream три раза, но значение size равно единице. Итак, результирующий поток содержит только один элемент, и мы выполнили дорогостоящие операции map() без причины два раза из трех.</p>
+
+<p>Если мы изменим порядок методов skip() и map(), то счетчик увеличится всего на единицу. Итак, мы вызовем метод <code class="language-plaintext highlighter-rouge">map()</code> только один раз:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="n">size</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">skip</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="na">map</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">wasCalled</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="o">}).</span><span class="na">count</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Это подводит нас к следующему правилу: промежуточные операции, которые уменьшают размер потока, должны быть размещены перед операциями, которые применяются к каждому элементу. Итак, нам нужно сохранить такие методы, как <code class="language-plaintext highlighter-rouge">skip()</code>, <code class="language-plaintext highlighter-rouge">filter()</code>, и <code class="language-plaintext highlighter-rouge">distinct()</code> в верхней части нашего конвейера stream.</p>
+
+<h2 id="6-сокращение-потока">6. Сокращение потока</h2>
+
+<p>API имеет множество терминальных операций, которые сводят поток к типу или примитиву: <code class="language-plaintext highlighter-rouge">count()</code>, <code class="language-plaintext highlighter-rouge">max()</code>, <code class="language-plaintext highlighter-rouge">min()</code>, и <code class="language-plaintext highlighter-rouge">sum()</code>. Однако эти операции работают в соответствии с предопределенной реализацией. Ну и что, если разработчику необходимо настроить механизм сокращения потока? Есть два метода, которые позволяют нам сделать это, методы <code class="language-plaintext highlighter-rouge">reduce()</code> и <code class="language-plaintext highlighter-rouge">collect()</code>.</p>
+
+<h3 id="61-метод-reduce-объединение">6.1. Метод reduce() (объединение)</h3>
+
+<p>Существует три варианта этого метода, которые отличаются своими сигнатурами и типами возвращаемых данных. Они могут иметь следующие параметры:</p>
+
+<p>identity – начальное значение для накопителя или значение по умолчанию, если поток пуст и накапливать нечего</p>
+
+<p>accumulator – функция, которая определяет логику агрегирования элементов. Поскольку accumulator создает новое значение для каждого шага объединения, количество новых значений равно размеру потока, и полезно только последнее значение. Это не очень хорошо сказывается на производительности.</p>
+
+<p>combiner – функция, которая агрегирует результаты сумматора. Мы вызываем combiner только в параллельном режиме, чтобы объединить результаты accumulators из разных потоков.</p>
+
+<p>Теперь давайте посмотрим на эти три метода в действии:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">OptionalInt</span> <span class="n">reduced</span> <span class="o">=</span>
+  <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">reduce</span><span class="o">((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// 6 (1 + 2 + 3)</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">reducedTwoParams</span> <span class="o">=</span>
+  <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">reduce</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// 16 (10 + 1 + 2 + 3)</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">reducedParams</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+     <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"combiner was called"</span><span class="o">);</span>
+     <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+  <span class="o">});</span>
+</code></pre></div></div>
+
+<p>Результат будет таким же, как в предыдущем примере (16), и логирования не будет, что означает, что combiner не вызывался. Чтобы combiner работал, поток должен быть параллельным:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">reducedParallel</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">).</span><span class="na">parallelStream</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+       <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"combiner was called"</span><span class="o">);</span>
+       <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">});</span>
+</code></pre></div></div>
+
+<p>Результат здесь другой (36), и combiner вызывался дважды. Здесь объединение выполняется по следующему алгоритму: накопитель запускается три раза путем добавления каждого элемента потока к identity. Эти действия выполняются параллельно. В результате у них получилось (10 + 1 = 11; 10 + 2 = 12; 10 + 3 = 13;). Теперь combiner может объединить эти три результата. Для этого требуется две итерации (12 + 13 = 25; 25 + 11 = 36).</p>
+
+<h3 id="62-метод-collect">6.2. Метод collect()</h3>
+
+<p>Объединение потока также может быть выполнено с помощью другой терминальной операции, метода <code class="language-plaintext highlighter-rouge">collect()</code>. Он принимает аргумент типа Collector, который определяет механизм объединения. Для большинства распространенных операций уже созданы предопределенные коллекторы. К ним можно получить доступ с помощью типа Collectors.</p>
+
+<p>В этом разделе мы будем использовать следующий список в качестве источника для всех потоков:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">productList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="nc">Product</span><span class="o">(</span><span class="mi">23</span><span class="o">,</span> <span class="s">"potatoes"</span><span class="o">),</span>
+  <span class="k">new</span> <span class="nf">Product</span><span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s">"orange"</span><span class="o">),</span> <span class="k">new</span> <span class="nc">Product</span><span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s">"lemon"</span><span class="o">),</span>
+  <span class="k">new</span> <span class="nf">Product</span><span class="o">(</span><span class="mi">23</span><span class="o">,</span> <span class="s">"bread"</span><span class="o">),</span> <span class="k">new</span> <span class="nc">Product</span><span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s">"sugar"</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Преобразование потока в коллекцию (Collection, List или Set):</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">collectorCollection</span> <span class="o">=</span>
+  <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getName</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</code></pre></div></div>
+
+<p>Объединение в строку:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">listToString</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getName</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">", "</span><span class="o">,</span> <span class="s">"["</span><span class="o">,</span> <span class="s">"]"</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Метод <code class="language-plaintext highlighter-rouge">joiner()</code> может иметь от одного до трех параметров (разделитель, префикс, суффикс). Самое удобное в использовании <code class="language-plaintext highlighter-rouge">joiner()</code> заключается в том, что разработчику не нужно проверять, достигает ли поток своего конца, чтобы применить суффикс, а не разделитель. Коллектор позаботится об этом.</p>
+
+<p>Обработка среднего значения всех числовых элементов потока:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="n">averagePrice</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">averagingInt</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getPrice</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Обработка суммы всех числовых элементов потока:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">summingPrice</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">summingInt</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getPrice</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Методы <code class="language-plaintext highlighter-rouge">averagingXX()</code>, <code class="language-plaintext highlighter-rouge">summingXX()</code> и <code class="language-plaintext highlighter-rouge">summarizingXX()</code> могут работать с примитивами (int, long, double) и с их классами-оболочками (Integer, Long, Double). Еще одной мощной функцией этих методов является обеспечение маппинга. В результате разработчику не нужно использовать дополнительную операцию <code class="language-plaintext highlighter-rouge">map()</code> перед методом <code class="language-plaintext highlighter-rouge">collect()</code>.</p>
+
+<p>Сбор статистической информации об элементах stream:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntSummaryStatistics</span> <span class="n">statistics</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">summarizingInt</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getPrice</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Используя результирующий экземпляр типа IntSummaryStatistics, разработчик может создать статистический отчет, применив метод <code class="language-plaintext highlighter-rouge">toString()</code>. Результатом будет строка, похожая на “IntSummaryStatistics{count=5, sum=86, min=13, average=17200000, max=23}.”</p>
+
+<p>Также легко извлечь из этого объекта отдельные значения для count, sum, min, и average, применив методы <code class="language-plaintext highlighter-rouge">getCount()</code>, <code class="language-plaintext highlighter-rouge">getSum()</code>, <code class="language-plaintext highlighter-rouge">getMin()</code>, <code class="language-plaintext highlighter-rouge">getAverage()</code>, и <code class="language-plaintext highlighter-rouge">getMax()</code>. Все эти значения могут быть извлечены из одного конвейера.</p>
+
+<p>Группировка элементов stream в соответствии с указанной функцией:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;&gt;</span> <span class="n">collectorMapOfLists</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="nl">Product:</span><span class="o">:</span><span class="n">getPrice</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>В приведенном выше примере поток был сведен к Map, который группирует все продукты по их цене.</p>
+
+<p>Разделение элементов stream на группы в соответствии с некоторым предикатом:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Boolean</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;&gt;</span> <span class="n">mapPartioned</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">partitioningBy</span><span class="o">(</span><span class="n">element</span> <span class="o">-&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">getPrice</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>Этот код использует потоки данных (Streams) для разделения списка продуктов (productList) на две группы на основе цены продукта. Результатом будет Map, где ключами являются Boolean значения (true или false), а значениями — списки продуктов, соответствующие этим ключам.</p>
+
+<p>Приведение коллектора к дополнительному преобразованию:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Set</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">unmodifiableSet</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">collectingAndThen</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toSet</span><span class="o">(),</span>
+  <span class="nl">Collections:</span><span class="o">:</span><span class="n">unmodifiableSet</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>В данном конкретном случае сборщик преобразовал stream в Set, а затем создал из него неизменяемый Set.</p>
+
+<p>Кастомный сборщик:</p>
+
+<p>Если по какой-либо причине необходимо создать кастомный коллектор, самый простой и наименее подробный способ сделать это - использовать метод <code class="language-plaintext highlighter-rouge">of()</code> типа Collector.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Collector</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">,</span> <span class="o">?,</span> <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;&gt;</span> <span class="n">toLinkedList</span> <span class="o">=</span>
+  <span class="nc">Collector</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="nl">LinkedList:</span><span class="o">:</span><span class="k">new</span><span class="o">,</span> <span class="nl">LinkedList:</span><span class="o">:</span><span class="n">add</span><span class="o">,</span>
+    <span class="o">(</span><span class="n">first</span><span class="o">,</span> <span class="n">second</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+       <span class="n">first</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">second</span><span class="o">);</span>
+       <span class="k">return</span> <span class="n">first</span><span class="o">;</span>
+    <span class="o">});</span>
+
+<span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">linkedListOfPersons</span> <span class="o">=</span>
+  <span class="n">productList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">toLinkedList</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Метод <code class="language-plaintext highlighter-rouge">of()</code> используется для создания экземпляра Collector. Первым аргументом является функция, которая создает аккумулятор (в нашем случае, новый LinkedList). Вторым аргументом — функция, которая добавляет элемент в аккумулятор. Третий аргумент — функция, объединяющая два аккумулятора в один. В данном случае, она просто добавляет все элементы из второго аккумулятора в первый. В этом примере экземпляр коллектора был объединен в <code class="language-plaintext highlighter-rouge">LinkedList&lt;Product&gt;</code>.</p>
+
+<h2 id="7-параллельные-потоки">7. Параллельные потоки</h2>
+
+<p>До появления Java 8 распараллеливание было сложным. Появление ExecutorService и forkJoin немного упростило жизнь разработчику, но все же стоило запомнить, как создать конкретный исполнитель, как его запускать и так далее. В Java 8 представлен способ реализации параллелизма в функциональном стиле.</p>
+
+<p>API позволяет нам создавать параллельные потоки, которые выполняют операции в параллельном режиме. Если источником потока является коллекция или массив, этого можно достичь с помощью метода <code class="language-plaintext highlighter-rouge">parallelStream()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">streamOfCollection</span> <span class="o">=</span> <span class="n">productList</span><span class="o">.</span><span class="na">parallelStream</span><span class="o">();</span>
+<span class="kt">boolean</span> <span class="n">isParallel</span> <span class="o">=</span> <span class="n">streamOfCollection</span><span class="o">.</span><span class="na">isParallel</span><span class="o">();</span>
+<span class="kt">boolean</span> <span class="n">bigPrice</span> <span class="o">=</span> <span class="n">streamOfCollection</span>
+  <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">product</span> <span class="o">-&gt;</span> <span class="n">product</span><span class="o">.</span><span class="na">getPrice</span><span class="o">()</span> <span class="o">*</span> <span class="mi">12</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">anyMatch</span><span class="o">(</span><span class="n">price</span> <span class="o">-&gt;</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Если источником потока является нечто иное, чем коллекция или массив, следует использовать метод <code class="language-plaintext highlighter-rouge">parallel()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntStream</span> <span class="n">intStreamParallel</span> <span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">150</span><span class="o">).</span><span class="na">parallel</span><span class="o">();</span>
+<span class="kt">boolean</span> <span class="n">isParallel</span> <span class="o">=</span> <span class="n">intStreamParallel</span><span class="o">.</span><span class="na">isParallel</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>По сути, Stream API автоматически использует платформу forkJoin для параллельного выполнения операций. По умолчанию будет использоваться общий пул потоков.</p>
+
+<p>При использовании потоков в параллельном режиме избегайте блокирования операций. Также лучше использовать параллельный режим, когда для выполнения задач требуется аналогичное количество времени. Если одна задача длится намного дольше другой, это может замедлить рабочий процесс всего приложения.</p>
+
+<p>Поток в параллельном режиме может быть преобразован обратно в последовательный режим с помощью метода <code class="language-plaintext highlighter-rouge">sequential()</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntStream</span> <span class="n">intStreamSequential</span> <span class="o">=</span> <span class="n">intStreamParallel</span><span class="o">.</span><span class="na">sequential</span><span class="o">();</span>
+<span class="kt">boolean</span> <span class="n">isParallel</span> <span class="o">=</span> <span class="n">intStreamSequential</span><span class="o">.</span><span class="na">isParallel</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="8-заключение">8. Заключение</h2>
+
+<p>Stream API - это мощный, но простой для понимания набор инструментов для обработки последовательности элементов. При правильном использовании это позволяет нам сократить огромное количество шаблонного кода, создавать более читаемые программы и повышать производительность приложения.</p>
+
+<p>В большинстве примеров кода, показанных в этой статье, мы оставили потоки неиспользованными (мы не применяли метод <code class="language-plaintext highlighter-rouge">close()</code> или терминальную операцию). В реальном приложении не оставляйте созданный поток неиспользованным, так как это приведет к утечке памяти.</p>
+
+<p><a href="https://www.baeldung.com/java-8-streams">оригинал</a></p>]]></content><author><name>Rinat Mambetov</name></author><category term="java" /><category term="stream" /><summary type="html"><![CDATA[В этом руководстве рассматривается практическое использование Java 8 Streams от создания до параллельного выполнения.]]></summary></entry></feed>

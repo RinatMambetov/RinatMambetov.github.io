@@ -18,25 +18,82 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: My awesome blog
+title: My blog about Java
+title_separator: "|"
+subtitle: "Version 1.0"
 email: mambetovpost@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Dive into the world of Java and programming with our latest blog post.
-  I'll take you from the basics of setting up your Java environment to
-  mastering advanced concepts like multithreading and object-oriented design.
-  This guide is perfect for both beginners and experienced developers looking
-  to deepen their knowledge. Join us as we explore Java's powerful features
-  and share essential programming principles that will enhance your coding skills.
-  Get ready to unlock the full potential of Java and programming.
+  Dive into the world of Java and programming with my latest blog post
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://rinatmambetov.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
-# twitter_username: jekyllrb
 github_username:  rinatmambetov
+name: "Rinat Mambetov"
+repository: "RinatMambetov/RinatMambetov.github.io"
+date_format: "%B %-d, %Y"
+words_per_minute: 250
+enable_copy_code_button: true
+search: true
+timezone: Europe/Moscow
+include: ["_pages"]
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      show_date: true
+      read_time: true
+      layout: single
+      # author_profile: true
+      # share: true
+      related: true
+      classes: wide
+
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+
+author:
+  name: "Rinat Mambetov"
+  avatar: "/assets/images/bio-photo.jpg"
+  bio: "I'm an avid self-learner and passionate about education." # Note: Markdown is allowed
+  location: "Moscow, Russia"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/RinatMambetov"
+    - label: "VKontakte"
+      icon: "fab fa-fw fa-vk"
+      url: "https://vk.com/rinatmambetov"
+
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/RinatMambetov"
+    - label: "VKontakte"
+      icon: "fab fa-fw fa-vk"
+      url: "https://vk.com/rinatmambetov"
+
+compress_html:
+  clippings: all
+  ignore:
+    envs: development  # disable compression in dev environment
 
 # Build settings
-theme: minima
+# theme: minima
+
+remote_theme: "mmistakes/minimal-mistakes@4.26.2"
+minimal_mistakes_skin: "air" #"default" "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
 plugins:
   - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-remote-theme
 
 # Exclude from processing.
 # The following items will not be processed, by default.
