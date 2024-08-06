@@ -18,12 +18,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: My blog about Java
+title: My blog about programming
 title_separator: "|"
 subtitle: "Version 1.0"
 email: mambetovpost@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Dive into the world of Java and programming with my latest blog post
+  Dive into the world of programming with my latest blog post
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://rinatmambetov.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  rinatmambetov
