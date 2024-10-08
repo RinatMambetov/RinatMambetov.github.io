@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Тестирование с Spring Boot"
+title:  "Тестирование со Spring Boot"
 date:   2024-06-29 18:18:05 +0300
 categories: java springboot testing
 ---
