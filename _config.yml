@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: My blog about programming
+title: Мой блог о программировании
 title_separator: "|"
 subtitle: "Version 1.0"
 email: mambetovpost@gmail.com
@@ -58,10 +58,10 @@ defaults:
       layout: single
 
 author:
-  name: "Rinat Mambetov"
+  name: "Ринат Мамбетов"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: "I'm an avid self-learner and passionate about education." # Note: Markdown is allowed
-  location: "Moscow, Russia"
+  bio: "Программист — это вечный ученик, который каждый день открывает новые горизонты знаний"
+  location: "Москва, Россия"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
