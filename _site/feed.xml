@@ -1,4 +1,198 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-08T18:11:47+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Тестирование с Spring Boot</title><link href="http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing.html" rel="alternate" type="text/html" title="Тестирование с Spring Boot" /><published>2024-06-29T18:18:05+03:00</published><updated>2024-06-29T18:18:05+03:00</updated><id>http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing</id><content type="html" xml:base="http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing.html"><![CDATA[<p>В этом руководстве мы рассмотрим написание тестов с использованием встроенной поддержки фреймворка Spring Boot. Мы охватим модульные тесты, которые могут выполняться в изоляции, а также интеграционные тесты, которые будут загружать контекст Spring перед выполнением тестов.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-08T20:38:21+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Руководство по Log4j и файлу log4j.properties в Java</title><link href="http://localhost:4000/java/logging/log4j/2024/07/05/java-log4j-properties-guide.html" rel="alternate" type="text/html" title="Руководство по Log4j и файлу log4j.properties в Java" /><published>2024-07-05T18:18:05+03:00</published><updated>2024-07-05T18:18:05+03:00</updated><id>http://localhost:4000/java/logging/log4j/2024/07/05/java-log4j-properties-guide</id><content type="html" xml:base="http://localhost:4000/java/logging/log4j/2024/07/05/java-log4j-properties-guide.html"><![CDATA[<p>Log4J — это популярный фреймворк для логирования с открытым исходным кодом, написанный на Java. Log4j широко используется в различных приложениях на Java. Более того, он является потокобезопасным, быстрым и предоставляет иерархию именованных логгеров. Log4j распространяется под лицензией Apache Software License с открытым исходным кодом.</p>
+
+<p>Версия Log4j 1.x достигла конца своего жизненного цикла 5 августа 2015 года. Поэтому на сегодняшний день Log4j2 является последним обновлением Log4j.</p>
+
+<p>В этом руководстве мы изучим Log4j и как настроить основные компоненты Log4j с помощью файла log4j.properties в Java.</p>
+
+<h2 id="1-настройка-maven">1. Настройка Maven</h2>
+
+<p>Для начала нам понадобится зависимость log4j-core в нашем файле pom.xml:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.logging.log4j<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>log4j-api<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.24.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h2 id="2-api-log4j">2. API Log4j</h2>
+
+<p>API Log4j предоставляет механизм для передачи информации о логировании на основе различных уровней приоритетов и направления её в различные назначения, такие как файлы, консоли, базы данных и т. д. Он также поддерживает фильтрацию лог-событий перед их передачей логгерам или аппендерам.</p>
+
+<p>API Log4j имеет многослойную архитектуру, которая предоставляет два типа объектов в фреймворке Log4j — основные объекты и вспомогательные объекты.</p>
+
+<h2 id="3-компоненты-log4j">3. Компоненты Log4j</h2>
+
+<p>Существует три основных компонента Log4j — логгеры, аппендеры и макеты — которые могут использоваться вместе для вывода настраиваемых лог-сообщений в нужные назначения. Давайте рассмотрим их кратко.</p>
+
+<h3 id="41-логгер">4.1. Логгер</h3>
+
+<p>Объект Logger отвечает за представление информации о логировании. Это первый обязательный уровень в архитектуре Log4j. Класс Logger определён в пакете org.apache.log4j.</p>
+
+<p>Как правило, мы создаём один экземпляр Logger для каждого класса приложения, чтобы логировать важные события, относящиеся к этому классу. Также мы обычно создаём этот экземпляр в начале класса, используя статический фабричный метод, который принимает имя класса в качестве параметра:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">JavaClass</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+</code></pre></div></div>
+
+<p>Затем мы можем использовать различные методы класса Logger для логирования или вывода важных событий в зависимости от их категорий. Эти методы включают trace(), debug(), info(), warn(), error(), fatal(). Эти методы определяют уровень запроса на логирование.</p>
+
+<p>Приоритетный порядок методов Logger: TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR &lt; FATAL. Таким образом, эти методы выводят лог-сообщения в зависимости от уровня логгера, установленного в файле log4j.properties. Это означает, что если мы установим уровень логгера как INFO, то все события INFO, WARN, ERROR и FATAL будут записаны в лог.</p>
+
+<h3 id="42-аппендер">4.2. Аппендер</h3>
+
+<p>Аппендер обозначает назначение вывода логов. Мы можем выводить логи в несколько предпочтительных мест с помощью Log4j, таких как консоль, файлы, удалённый сокет-сервер, база данных и т. д. Мы называем эти выходные назначения аппендерами. Более того, мы можем прикрепить несколько аппендеров к логгеру.</p>
+
+<p>Аппендеры работают в соответствии с правилом аддитивности аппендеров. Это правило гласит, что вывод лог-сообщения любого логгера будет направлен ко всем его аппендерам и его предкам — аппендерам, которые находятся выше в иерархии.</p>
+
+<p>Log4j имеет несколько аппендеров, определённых для файлов, консольных выводов, GUI-компонентов, удалённых сокет-серверов, JMS и т. д.</p>
+
+<h3 id="43-макет">4.3. Макет</h3>
+
+<p>Мы используем макеты для настройки формата лог-сообщений. Мы можем сделать это, ассоциировав макет с уже определённым аппендером. Таким образом, комбинация макета и аппендеров помогает нам отправлять отформатированные лог-сообщения в нужные назначения.</p>
+
+<p>Мы можем указать формат лог-сообщений, используя шаблоны преобразования. Класс PatternLayout объясняет больше о символах преобразования, которые мы можем использовать в зависимости от наших нужд.</p>
+
+<p>Мы также рассмотрим несколько символов преобразования через примеры в следующих разделах.</p>
+
+<h2 id="5-файл-log4jproperties">5. Файл log4j.properties</h2>
+
+<p>Мы можем настроить Log4j с помощью XML или файла свойств. Файл log4j.properties хранит конфигурации в виде пар “ключ-значение”.</p>
+
+<p>Имя файла конфигурации свойств log4j по умолчанию — log4j.properties. Логгер ищет это имя файла в CLASSPATH. Однако, если нам нужно использовать другое имя конфигурационного файла, мы можем установить его с помощью системного свойства log4j.configuration.</p>
+
+<p>Файл log4j.properties содержит спецификации аппендеров, их имена и типы, а также шаблоны макетов. Он также содержит спецификации о корневом логгере по умолчанию и его уровнях логирования.</p>
+
+<h2 id="6-синтаксис-файла-log4jproperties">6. Синтаксис файла log4j.properties</h2>
+
+<p>В общем файле log4j.properties мы определяем следующие конфигурации:</p>
+
+<ul>
+  <li>Корневой логгер и его уровень. Мы также предоставляем имя для аппендера здесь.</li>
+  <li>Затем мы назначаем действительный аппендер для определённого имени аппендера.</li>
+  <li>Наконец, мы определяем макет, цель, уровень и т. д. для определённого аппендера.</li>
+</ul>
+
+<p>Давайте посмотрим на синтаксис общего файла log4j.properties:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Корневой логгер с именем аппендера
+log4j.rootLogger = DEBUG, NAME
+
+# Назначаем NAME действительный аппендер
+log4j.appender.NAME = org.apache.log4j.FileAppender
+
+# Определяем макет для NAME
+log4j.appender.NAME.layout=org.apache.log4j.PatternLayout
+log4j.appender.NAME.layout.conversionPattern=%m%n
+</code></pre></div></div>
+
+<p>Здесь NAME — это имя аппендера. Как уже обсуждалось ранее, мы можем прикрепить несколько аппендеров к логгеру, чтобы направлять логи в разные назначения.</p>
+
+<h2 id="7-примеры">7. Примеры</h2>
+
+<p>Теперь давайте разберём конфигурации файла log4j.properties для различных аппендеров с помощью нескольких примеров.</p>
+
+<h3 id="71-пример-программы">7.1. Пример программы</h3>
+
+<p>Давайте начнём с примерного приложения, которое логирует некоторые сообщения:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.log4j.Logger</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4jExample</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">Log4jExample</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"This is the "</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">" time I say 'Hello World'."</span><span class="o">);</span>
+            <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Приложение простое — оно записывает некоторые сообщения в цикле с короткой задержкой между итерациями. В нём 2,000 итераций, и в каждой итерации есть пауза в 100 мс. Таким образом, выполнение должно занять около трёх с половиной минут. Мы будем использовать это приложение в наших примерах ниже.</p>
+
+<h3 id="72-логирование-в-консоль">7.2. Логирование в консоль</h3>
+
+<p>Консоль является местом по умолчанию для логирования сообщений, если конфигурационный файл не найден. Давайте создадим конфигурацию log4j.properties для ConsoleAppender с корневым логгером и также определим уровень логирования для него:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Корневой логгер
+log4j.rootLogger=INFO, stdout
+
+# Направляем лог-сообщения в stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+</code></pre></div></div>
+
+<p>Здесь мы определили файл log4j.properties со следующими спецификациями:</p>
+
+<ul>
+  <li>Мы установили уровень корневого логгера как INFO. Это означает, что все лог-события с уровнем INFO и выше будут записываться. Мы также задали имя для аппендера как stdout.</li>
+  <li>Поскольку мы хотим направить логи в консоль, мы назначили аппендер как org.apache.log4j.ConsoleAppender и цель как System.out.</li>
+  <li>Наконец, мы указали формат для PatternLayout, в котором хотим выводить логи, используя ConversionPattern.</li>
+</ul>
+
+<p>Давайте также разберём значение каждого из символов преобразования в ConversionPattern, которые мы использовали:</p>
+
+<ul>
+  <li><strong>%d</strong> добавляет временную метку в заданном формате.</li>
+  <li><strong>%-5p</strong> добавляет информацию об уровне логирования к каждому лог-сообщению. Это означает, что приоритет события логирования должен быть выровнен по левому краю с шириной в пять символов.</li>
+  <li><strong>%c{1}</strong> выводит квалифицированное имя класса, опционально за которым следуют имена пакетов (квалификатор точности), то есть логирует конкретное лог-сообщение.</li>
+  <li><strong>%L</strong> выводит номер строки конкретного лог-события.</li>
+  <li><strong>%m</strong> выводит фактическое лог-сообщение.</li>
+  <li><strong>%n</strong> добавляет новую строку после каждого лог-сообщения.</li>
+</ul>
+
+<p>Таким образом, когда мы запускаем наше примерное приложение, мы получаем следующие строки, напечатанные в консоли:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2023-08-01 00:27:25 INFO Log4jExample:15 - This is the 1 time I say 'Hello World'.
+...
+...
+2023-08-01 00:27:25 INFO Log4jExample:15 - This is the 2000 time I say 'Hello World'.
+</code></pre></div></div>
+
+<p><a href="https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">Документация для класса PatternLayout</a> объясняет больше о символах преобразования, которые мы можем использовать в зависимости от наших нужд.</p>
+
+<h3 id="73-несколько-назначений">7.3. Несколько назначений</h3>
+
+<p>Как уже обсуждалось ранее, мы можем перенаправлять лог-события в несколько назначений:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Корневой логгер
+log4j.rootLogger=INFO, file, stdout
+
+# Перенаправление в файл
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+log4j.appender.file.File=C:\\Baeldung\\app.log
+log4j.appender.file.MaxFileSize=5KB
+log4j.appender.file.MaxBackupIndex=2
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+
+# Перенаправление в консоль
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+</code></pre></div></div>
+
+<p>Здесь мы использовали два аппендера, чтобы перенаправить лог-сообщения как в файл, так и в консоль. Также мы назначили RollingFileAppender для нашего файлового аппендера. Мы используем RollingFileAppender, когда знаем, что лог-файлы могут со временем увеличиваться в размере.</p>
+
+<p>В нашем примере выше мы использовали RollingFileAppender, который прокручивает лог-файлы на основе как размера, так и количества лог-файлов, используя параметры MaxFileSize и MaxBackupIndex. Таким образом, лог-файл будет прокручиваться, когда его размер достигнет 5 КБ, и мы будем хранить максимум два прокрученных лог-файла в качестве резервной копии.</p>
+
+<p>Когда мы запускаем наше приложение, мы получаем следующие файлы, содержащие те же лог-сообщения, что и в предыдущем примере:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>31/01/2024  10:28    138 app.log
+31/01/2024  10:28  5.281 app.log.1
+31/01/2024  10:28  5.281 app.log.2
+</code></pre></div></div>
+
+<h2 id="8-заключение">8. Заключение</h2>
+
+<p>В этой статье мы рассмотрели Log4j и его три компонента — логгеры, аппендеры и макеты. Мы также поняли синтаксис файла log4j.properties и некоторые простые примеры конфигурации файла log4j.properties.</p>
+
+<p><a href="https://www.baeldung.com/java-log4j-properties-guide">оригинал</a></p>]]></content><author><name>Ринат Мамбетов</name></author><category term="java" /><category term="logging" /><category term="Log4j" /><summary type="html"><![CDATA[Log4J — это популярный фреймворк для логирования с открытым исходным кодом, написанный на Java. Log4j широко используется в различных приложениях на Java. Более того, он является потокобезопасным, быстрым и предоставляет иерархию именованных логгеров. Log4j распространяется под лицензией Apache Software License с открытым исходным кодом.]]></summary></entry><entry><title type="html">Тестирование со Spring Boot</title><link href="http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing.html" rel="alternate" type="text/html" title="Тестирование со Spring Boot" /><published>2024-06-29T18:18:05+03:00</published><updated>2024-06-29T18:18:05+03:00</updated><id>http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing</id><content type="html" xml:base="http://localhost:4000/java/springboot/testing/2024/06/29/springboot-testing.html"><![CDATA[<p>В этом руководстве мы рассмотрим написание тестов с использованием встроенной поддержки фреймворка Spring Boot. Мы охватим модульные тесты, которые могут выполняться в изоляции, а также интеграционные тесты, которые будут загружать контекст Spring перед выполнением тестов.</p>
 
 <h2 id="1-настройка-проекта">1. Настройка проекта</h2>
 <p>Приложение, которое мы будем использовать в этой статье, представляет собой API, предоставляющее некоторые базовые операции с ресурсом “Employee”. Это типичная многослойная архитектура — вызов API обрабатывается от Контроллера к Сервису и далее к слою хранения данных.</p>
@@ -10,7 +204,7 @@
     <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
     <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.1.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.3.4<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.h2database<span class="nt">&lt;/groupId&gt;</span>

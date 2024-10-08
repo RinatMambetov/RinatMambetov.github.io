@@ -18,7 +18,7 @@ categories: java springboot testing
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-test</artifactId>
     <scope>test</scope>
-    <version>3.1.5</version>
+    <version>3.3.4</version>
 </dependency>
 <dependency>
     <groupId>com.h2database</groupId>
