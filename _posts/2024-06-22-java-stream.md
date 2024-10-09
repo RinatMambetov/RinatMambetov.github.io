@@ -2,7 +2,7 @@
 layout: single
 title:  "Руководство по Java 8 Stream API"
 date:   2024-06-21 18:18:05 +0300
-categories: java stream
+categories: java
 ---
 
 В этом руководстве рассматривается практическое использование Java 8 Streams от создания до параллельного выполнения.
