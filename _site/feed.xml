@@ -1,4 +1,199 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-09T10:50:13+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Руководство по томам Docker (Docker Volumes)</title><link href="http://localhost:4000/docker/2024/07/12/ops-docker-volumes.html" rel="alternate" type="text/html" title="Руководство по томам Docker (Docker Volumes)" /><published>2024-07-12T18:18:05+03:00</published><updated>2024-07-12T18:18:05+03:00</updated><id>http://localhost:4000/docker/2024/07/12/ops-docker-volumes</id><content type="html" xml:base="http://localhost:4000/docker/2024/07/12/ops-docker-volumes.html"><![CDATA[<p>Контейнеры — это изолированные среды в контексте системы Linux, которые могут выделять заранее определенные объемы конкретных ресурсов. Чаще всего контейнеры Docker используются для запуска приложений в изоляции. По умолчанию все изменения внутри контейнера теряются, когда контейнер останавливается. Если мы хотим сохранять данные между запусками, могут помочь тома Docker и bind mounts.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-11-07T11:55:43+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Spring IoC Container</title><link href="http://localhost:4000/spring/2024/07/19/spring-container-overview.html" rel="alternate" type="text/html" title="Spring IoC Container" /><published>2024-07-19T18:18:05+03:00</published><updated>2024-07-19T18:18:05+03:00</updated><id>http://localhost:4000/spring/2024/07/19/spring-container-overview</id><content type="html" xml:base="http://localhost:4000/spring/2024/07/19/spring-container-overview.html"><![CDATA[<p>Интерфейс org.springframework.context.ApplicationContext представляет собой контейнер Spring IoC и отвечает за инстанцирование, конфигурацию и сборку бинов. Контейнер получает инструкции о компонентах, которые необходимо инстанцировать, конфигурировать и собирать, считывая метаданные конфигурации. Метаданные конфигурации могут быть представлены в виде аннотированных классов компонентов, классов конфигурации с фабричными методами или внешних XML-файлов или скриптов Groovy. В любом из этих форматов вы можете составить свое приложение и богатые взаимозависимости между этими компонентами.</p>
+
+<h2 id="обзор-контейнера">Обзор контейнера</h2>
+
+<p>Несколько реализаций интерфейса ApplicationContext являются частью основного Spring. В автономных приложениях обычно создается экземпляр AnnotationConfigApplicationContext или ClassPathXmlApplicationContext.</p>
+
+<p>В большинстве сценариев приложений явный код пользователя не требуется для инстанцирования одного или нескольких экземпляров контейнера Spring IoC. Например, в простом веб-приложении достаточно простого шаблонного веб-дескриптора XML в файле web.xml приложения. В сценарии Spring Boot контекст приложения неявно инициализируется для вас на основе общих соглашений по настройке.</p>
+
+<p>Следующая диаграмма показывает общее представление о том, как работает Spring. Ваши классы приложения комбинируются с метаданными конфигурации, так что после создания и инициализации ApplicationContext у вас есть полностью настроенная и исполняемая система или приложение.</p>
+
+<p><img src="https://docs.spring.io/spring-framework/reference/_images/container-magic.png" alt="container-magic" /></p>
+
+<h2 id="метаданные-конфигурации">Метаданные конфигурации</h2>
+
+<p>Как показано на предыдущей диаграмме, контейнер Spring IoC использует форму метаданных конфигурации. Эти метаданные конфигурации представляют собой способ, которым вы, как разработчик приложения, сообщаете контейнеру Spring, как инстанцировать, конфигурировать и собирать компоненты в вашем приложении.</p>
+
+<p>Сам контейнер Spring IoC полностью отделен от формата, в котором эти метаданные конфигурации фактически написаны. В настоящее время многие разработчики выбирают конфигурацию на основе Java для своих приложений Spring:</p>
+
+<ul>
+  <li>
+    <p>Конфигурация на основе аннотаций: определяйте бины, используя метаданные конфигурации на основе аннотаций в классах компонентов вашего приложения.</p>
+  </li>
+  <li>
+    <p>Конфигурация на основе Java: определяйте бины вне классов вашего приложения, используя классы конфигурации на основе Java. Для использования этих функций смотрите аннотации @Configuration, @Bean, @Import и @DependsOn.</p>
+  </li>
+</ul>
+
+<p>Конфигурация Spring состоит как минимум из одного, а обычно из более чем одного определения бина, которые контейнер должен управлять. Конфигурация на основе Java обычно использует методы, аннотированные @Bean, внутри класса @Configuration, каждый из которых соответствует одному определению бина.</p>
+
+<p>Эти определения бинов соответствуют фактическим объектам, которые составляют ваше приложение. Обычно вы определяете объекты уровня сервиса, объекты уровня персистенции, такие как репозитории или объекты доступа к данным (DAO), объекты представления, такие как веб-контроллеры, инфраструктурные объекты, такие как JPA EntityManagerFactory, JMS-очереди и так далее. Обычно не настраивают детализированные доменные объекты в контейнере, поскольку обычно это ответственность репозиториев и бизнес-логики — создавать и загружать доменные объекты.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="nt">&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"..."</span> <span class="na">class=</span><span class="s">"..."</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- collaborators and configuration for this bean go here --&gt;</span>
+	<span class="nt">&lt;/bean&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"..."</span> <span class="na">class=</span><span class="s">"..."</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- collaborators and configuration for this bean go here --&gt;</span>
+	<span class="nt">&lt;/bean&gt;</span>
+
+	<span class="c">&lt;!-- more bean definitions go here --&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<h2 id="xml-как-внешний-dsl-конфигурации">XML как внешний DSL конфигурации</h2>
+
+<p>Метаданные конфигурации на основе XML настраивают эти бины как элементы <code class="language-plaintext highlighter-rouge">&lt;bean/&gt;</code> внутри верхнего уровня элемента <code class="language-plaintext highlighter-rouge">&lt;beans/&gt;</code>. Следующий пример показывает основную структуру метаданных конфигурации на основе XML:</p>
+
+<p>Атрибут id — это строка, которая идентифицирует отдельное определение бина.
+Атрибут class определяет тип бина и использует полное имя класса.
+Значение атрибута id может быть использовано для ссылки на объекты-сотрудники. XML для ссылки на объекты-сотрудники в этом примере не показан.</p>
+
+<p>Для инстанцирования контейнера необходимо указать путь или пути к XML-ресурсам в конструкторе ClassPathXmlApplicationContext, который позволяет контейнеру загружать метаданные конфигурации из различных внешних ресурсов, таких как локальная файловая система, Java CLASSPATH и так далее.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"services.xml"</span><span class="o">,</span> <span class="s">"daos.xml"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Следующий пример показывает файл конфигурации объектов уровня сервиса (services.xml):</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="nt">&gt;</span>
+
+	<span class="c">&lt;!-- services --&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"petStore"</span> <span class="na">class=</span><span class="s">"org.springframework.samples.jpetstore.services.PetStoreServiceImpl"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"accountDao"</span> <span class="na">ref=</span><span class="s">"accountDao"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"itemDao"</span> <span class="na">ref=</span><span class="s">"itemDao"</span><span class="nt">/&gt;</span>
+		<span class="c">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span>
+	<span class="nt">&lt;/bean&gt;</span>
+
+	<span class="c">&lt;!-- more bean definitions for services go here --&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>Следующий пример показывает файл daos.xml для объектов доступа к данным:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="nt">&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountDao"</span>
+		<span class="na">class=</span><span class="s">"org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao"</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span>
+	<span class="nt">&lt;/bean&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"itemDao"</span> <span class="na">class=</span><span class="s">"org.springframework.samples.jpetstore.dao.jpa.JpaItemDao"</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span>
+	<span class="nt">&lt;/bean&gt;</span>
+
+	<span class="c">&lt;!-- more bean definitions for data access objects go here --&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>В предыдущем примере уровень сервиса состоит из класса PetStoreServiceImpl и двух объектов доступа к данным типов JpaAccountDao и JpaItemDao (основанных на стандарте JPA для объектно-реляционного отображения). Элемент свойства name ссылается на имя свойства JavaBean, а элемент ref ссылается на имя другого определения бина. Эта связь между элементами id и ref выражает зависимость между сотрудничающими объектами.</p>
+
+<h2 id="составление-метаданных-конфигурации-на-основе-xml">Составление метаданных конфигурации на основе XML</h2>
+
+<p>Полезно, когда определения бинов охватывают несколько XML-файлов. Часто каждый отдельный файл конфигурации XML представляет собой логический уровень или модуль в вашей архитектуре.</p>
+
+<p>Вы можете использовать конструктор ClassPathXmlApplicationContext для загрузки определений бинов из фрагментов XML. Этот конструктор принимает несколько местоположений ресурсов, как было показано в предыдущем разделе. В качестве альтернативы вы можете использовать одно или несколько вхождений элемента <code class="language-plaintext highlighter-rouge">****&lt;import/&gt;</code> для загрузки определений бинов из другого файла или файлов. Следующий пример показывает, как это сделать:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;beans&gt;</span>
+	<span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">"services.xml"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">"resources/messageSource.xml"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">"/resources/themeSource.xml"</span><span class="nt">/&gt;</span>
+
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"bean1"</span> <span class="na">class=</span><span class="s">"..."</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"bean2"</span> <span class="na">class=</span><span class="s">"..."</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>В предыдущем примере внешние определения бинов загружаются из трех файлов: services.xml, messageSource.xml и themeSource.xml. Все пути расположения относительны к файлу определения, который выполняет импорт, поэтому services.xml должен находиться в той же директории или класспасе, что и файл, выполняющий импорт, в то время как messageSource.xml и themeSource.xml должны находиться в расположении ресурсов ниже расположения импортирующего файла. Как видно, начальный слэш игнорируется. Однако, учитывая, что эти пути относительны, лучше вообще не использовать слэш. Содержимое импортируемых файлов, включая верхний уровень элемента <code class="language-plaintext highlighter-rouge">&lt;beans/&gt;</code>, должно быть действительными XML-определениями бинов в соответствии со схемой Spring.</p>
+
+<p>Возможно, но не рекомендуется, ссылаться на файлы в родительских директориях, используя относительный путь “../”. Это создает зависимость от файла, который находится вне текущего приложения. В частности, такая ссылка не рекомендуется для URL-адресов classpath: (например, classpath:../services.xml), где процесс разрешения во время выполнения выбирает «ближайший» корень класспаса, а затем ищет в его родительской директории. Изменения конфигурации класспаса могут привести к выбору другой, неверной директории.</p>
+
+<p>Вы всегда можете использовать полностью квалифицированные местоположения ресурсов вместо относительных путей: например, file:C:/config/services.xml или classpath:/config/services.xml. Однако имейте в виду, что вы связываете конфигурацию вашего приложения с конкретными абсолютными местоположениями. Обычно предпочтительнее сохранять косвенность для таких абсолютных местоположений — например, через заполнители “${…​}”, которые разрешаются в свойствах системы JVM во время выполнения.</p>
+
+<p>Само пространство имен предоставляет возможность директивы импорта. Дополнительные функции конфигурации, помимо простых определений бинов, доступны в ряде XML-пространств имен, предоставляемых Spring, например, в пространствах имен context и util.</p>
+
+<h2 id="dsl-определения-бинов-на-groovy">DSL определения бинов на Groovy</h2>
+
+<p>В качестве еще одного примера для внешних метаданных конфигурации определения бинов также могут быть выражены в DSL определения бинов Groovy от Spring, известном из фреймворка Grails. Обычно такая конфигурация хранится в файле с расширением “.groovy” со структурой, показанной в следующем примере:</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">beans</span> <span class="o">{</span>
+	<span class="n">dataSource</span><span class="o">(</span><span class="n">BasicDataSource</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">driverClassName</span> <span class="o">=</span> <span class="s2">"org.hsqldb.jdbcDriver"</span>
+		<span class="n">url</span> <span class="o">=</span> <span class="s2">"jdbc:hsqldb:mem:grailsDB"</span>
+		<span class="n">username</span> <span class="o">=</span> <span class="s2">"sa"</span>
+		<span class="n">password</span> <span class="o">=</span> <span class="s2">""</span>
+		<span class="n">settings</span> <span class="o">=</span> <span class="o">[</span><span class="nl">mynew:</span><span class="s2">"setting"</span><span class="o">]</span>
+	<span class="o">}</span>
+	<span class="n">sessionFactory</span><span class="o">(</span><span class="n">SessionFactory</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span>
+	<span class="o">}</span>
+	<span class="n">myService</span><span class="o">(</span><span class="n">MyService</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">nestedBean</span> <span class="o">=</span> <span class="o">{</span> <span class="n">AnotherBean</span> <span class="n">bean</span> <span class="o">-&gt;</span>
+			<span class="n">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Этот стиль конфигурации в значительной степени эквивалентен XML-определениям бинов и даже поддерживает XML-пространства имен конфигурации Spring. Он также позволяет импортировать файлы определения бинов XML через директиву importBeans.</p>
+
+<p>Использование контейнера
+ApplicationContext — это интерфейс для продвинутой фабрики, способной поддерживать реестр различных бинов и их зависимостей. Используя метод T getBean(String name, Class&lt;T&gt; requiredType), вы можете извлекать экземпляры ваших бинов.</p>
+
+<p>ApplicationContext позволяет вам читать определения бинов и получать к ним доступ, как показано в следующем примере:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// create and configure beans</span>
+<span class="nc">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"services.xml"</span><span class="o">,</span> <span class="s">"daos.xml"</span><span class="o">);</span>
+
+<span class="c1">// retrieve configured instance</span>
+<span class="nc">PetStoreService</span> <span class="n">service</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"petStore"</span><span class="o">,</span> <span class="nc">PetStoreService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="c1">// use configured instance</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">userList</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getUsernameList</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>С конфигурацией на Groovy процесс инициализации выглядит очень похоже. У него есть другой класс реализации контекста, который осведомлен о Groovy (но также понимает определения бинов XML). Следующий пример демонстрирует конфигурацию на Groovy:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericGroovyApplicationContext</span><span class="o">(</span><span class="s">"services.groovy"</span><span class="o">,</span> <span class="s">"daos.groovy"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Самый гибкий вариант — это GenericApplicationContext в сочетании с делегатами чтения, например, с XmlBeanDefinitionReader для XML-файлов, как показано в следующем примере:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">GenericApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericApplicationContext</span><span class="o">();</span>
+<span class="k">new</span> <span class="nf">XmlBeanDefinitionReader</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">loadBeanDefinitions</span><span class="o">(</span><span class="s">"services.xml"</span><span class="o">,</span> <span class="s">"daos.xml"</span><span class="o">);</span>
+<span class="n">context</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Вы также можете использовать GroovyBeanDefinitionReader для файлов Groovy, как показано в следующем примере:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">GenericApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericApplicationContext</span><span class="o">();</span>
+<span class="k">new</span> <span class="nf">GroovyBeanDefinitionReader</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">loadBeanDefinitions</span><span class="o">(</span><span class="s">"services.groovy"</span><span class="o">,</span> <span class="s">"daos.groovy"</span><span class="o">);</span>
+<span class="n">context</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Вы можете комбинировать такие делегаты чтения в одном ApplicationContext, считывая определения бинов из различных источников конфигурации.</p>
+
+<p>Затем вы можете использовать метод getBean для извлечения экземпляров ваших бинов. Интерфейс ApplicationContext имеет несколько других методов для получения бинов, но, в идеале, ваш код приложения не должен их использовать. Действительно, ваш код приложения не должен содержать вызовов метода getBean() и, таким образом, не должен зависеть от API Spring. Например, интеграция Spring с веб-фреймворками предоставляет внедрение зависимостей для различных компонентов веб-фреймворков, таких как контроллеры и управляемые JSF-бины, позволяя вам объявлять зависимость от конкретного бина через метаданные (такие как аннотация автозаполнения).</p>
+
+<p><a href="https://docs.spring.io/spring-framework/reference/core/beans/basics.html">оригинал</a></p>]]></content><author><name>Ринат Мамбетов</name></author><category term="spring" /><summary type="html"><![CDATA[Интерфейс org.springframework.context.ApplicationContext представляет собой контейнер Spring IoC и отвечает за инстанцирование, конфигурацию и сборку бинов. Контейнер получает инструкции о компонентах, которые необходимо инстанцировать, конфигурировать и собирать, считывая метаданные конфигурации. Метаданные конфигурации могут быть представлены в виде аннотированных классов компонентов, классов конфигурации с фабричными методами или внешних XML-файлов или скриптов Groovy. В любом из этих форматов вы можете составить свое приложение и богатые взаимозависимости между этими компонентами.]]></summary></entry><entry><title type="html">Руководство по томам Docker (Docker Volumes)</title><link href="http://localhost:4000/docker/2024/07/12/ops-docker-volumes.html" rel="alternate" type="text/html" title="Руководство по томам Docker (Docker Volumes)" /><published>2024-07-12T18:18:05+03:00</published><updated>2024-07-12T18:18:05+03:00</updated><id>http://localhost:4000/docker/2024/07/12/ops-docker-volumes</id><content type="html" xml:base="http://localhost:4000/docker/2024/07/12/ops-docker-volumes.html"><![CDATA[<p>Контейнеры — это изолированные среды в контексте системы Linux, которые могут выделять заранее определенные объемы конкретных ресурсов. Чаще всего контейнеры Docker используются для запуска приложений в изоляции. По умолчанию все изменения внутри контейнера теряются, когда контейнер останавливается. Если мы хотим сохранять данные между запусками, могут помочь тома Docker и bind mounts.</p>
 
 <p>В этом руководстве мы узнаем о томах Docker и о том, как управлять ими и подключать к контейнерам.</p>
 
@@ -263,7 +458,7 @@ Rinat.txt
 
 <p>В общем, знание того, как работать с постоянным хранилищем в Docker, имеет решающее значение для многих приложений, которые требуют согласованности.</p>
 
-<p><a href="https://www.baeldung.com/ops/docker-volumes">оригинал</a></p>]]></content><author><name>Ринат Мамбетов</name></author><category term="docker" /><summary type="html"><![CDATA[Контейнеры — это изолированные среды в контексте системы Linux, которые могут выделять заранее определенные объемы конкретных ресурсов. Чаще всего контейнеры Docker используются для запуска приложений в изоляции. По умолчанию все изменения внутри контейнера теряются, когда контейнер останавливается. Если мы хотим сохранять данные между запусками, могут помочь тома Docker и bind mounts.]]></summary></entry><entry><title type="html">Руководство по Log4j и файлу log4j.properties в Java</title><link href="http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide.html" rel="alternate" type="text/html" title="Руководство по Log4j и файлу log4j.properties в Java" /><published>2024-07-05T18:18:05+03:00</published><updated>2024-07-05T18:18:05+03:00</updated><id>http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide</id><content type="html" xml:base="http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide.html"><![CDATA[<p>Log4J — это популярный фреймворк для логирования с открытым исходным кодом, написанный на Java. Log4j широко используется в различных приложениях на Java. Более того, он является потокобезопасным, быстрым и предоставляет иерархию именованных логгеров. Log4j распространяется под лицензией Apache Software License с открытым исходным кодом.</p>
+<p><a href="https://www.baeldung.com/ops/docker-volumes">оригинал</a></p>]]></content><author><name>Ринат Мамбетов</name></author><category term="docker" /><summary type="html"><![CDATA[Контейнеры — это изолированные среды в контексте системы Linux, которые могут выделять заранее определенные объемы конкретных ресурсов. Чаще всего контейнеры Docker используются для запуска приложений в изоляции. По умолчанию все изменения внутри контейнера теряются, когда контейнер останавливается. Если мы хотим сохранять данные между запусками, могут помочь тома Docker и bind mounts.]]></summary></entry><entry><title type="html">Руководство по Log4j и log4j.properties в Java</title><link href="http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide.html" rel="alternate" type="text/html" title="Руководство по Log4j и log4j.properties в Java" /><published>2024-07-05T18:18:05+03:00</published><updated>2024-07-05T18:18:05+03:00</updated><id>http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide</id><content type="html" xml:base="http://localhost:4000/logging/2024/07/05/java-log4j-properties-guide.html"><![CDATA[<p>Log4J — это популярный фреймворк для логирования с открытым исходным кодом, написанный на Java. Log4j широко используется в различных приложениях на Java. Более того, он является потокобезопасным, быстрым и предоставляет иерархию именованных логгеров. Log4j распространяется под лицензией Apache Software License с открытым исходным кодом.</p>
 
 <p>Версия Log4j 1.x достигла конца своего жизненного цикла 5 августа 2015 года. Поэтому на сегодняшний день Log4j2 является последним обновлением Log4j.</p>
 

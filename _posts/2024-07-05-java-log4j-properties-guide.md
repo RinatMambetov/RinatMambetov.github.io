@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Руководство по Log4j и файлу log4j.properties в Java"
+title:  "Руководство по Log4j и log4j.properties в Java"
 date:   2024-07-05 18:18:05 +0300
 categories: logging
 ---
