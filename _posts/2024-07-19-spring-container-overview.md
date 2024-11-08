@@ -15,7 +15,8 @@ categories: spring
 
 Следующая диаграмма показывает общее представление о том, как работает Spring. Ваши классы приложения комбинируются с метаданными конфигурации, так что после создания и инициализации ApplicationContext у вас есть полностью настроенная и исполняемая система или приложение.
 
-![container-magic](https://docs.spring.io/spring-framework/reference/_images/container-magic.png)
+<!-- ![container-magic](https://docs.spring.io/spring-framework/reference/_images/container-magic.png) -->
+![container-magic](/assets/images/container-magic.png)
 
 ## Метаданные конфигурации
 
