@@ -1,4 +1,211 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-11-08T21:08:27+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Spring IoC Container</title><link href="http://localhost:4000/spring/2024/07/19/spring-container-overview.html" rel="alternate" type="text/html" title="Spring IoC Container" /><published>2024-07-19T18:18:05+03:00</published><updated>2024-07-19T18:18:05+03:00</updated><id>http://localhost:4000/spring/2024/07/19/spring-container-overview</id><content type="html" xml:base="http://localhost:4000/spring/2024/07/19/spring-container-overview.html"><![CDATA[<p>Интерфейс org.springframework.context.ApplicationContext представляет собой контейнер Spring IoC и отвечает за инстанцирование, конфигурацию и сборку бинов. Контейнер получает инструкции о компонентах, которые необходимо инстанцировать, конфигурировать и собирать, считывая метаданные конфигурации. Метаданные конфигурации могут быть представлены в виде аннотированных классов компонентов, классов конфигурации с фабричными методами или внешних XML-файлов или скриптов Groovy. В любом из этих форматов вы можете составить свое приложение и богатые взаимозависимости между этими компонентами.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-11-10T14:45:09+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мой блог о программировании</title><subtitle>Dive into the world of programming with my latest blog post</subtitle><author><name>Ринат Мамбетов</name></author><entry><title type="html">Обзор Spring Bean</title><link href="http://localhost:4000/spring/2024/07/26/spring-bean-overview.html" rel="alternate" type="text/html" title="Обзор Spring Bean" /><published>2024-07-26T18:18:05+03:00</published><updated>2024-07-26T18:18:05+03:00</updated><id>http://localhost:4000/spring/2024/07/26/spring-bean-overview</id><content type="html" xml:base="http://localhost:4000/spring/2024/07/26/spring-bean-overview.html"><![CDATA[<p>Контейнер IoC Spring управляет одним или несколькими бинами. Эти бины создаются с использованием метаданных конфигурации, которые вы предоставляете контейнеру (например, в виде определений <code class="language-plaintext highlighter-rouge">&lt;bean/&gt;</code> в XML).</p>
+
+<h2 id="обзор-бинов">Обзор бинов</h2>
+
+<p>Внутри самого контейнера эти определения бинов представлены как объекты BeanDefinition, которые содержат (среди прочей информации) следующие метаданные:</p>
+
+<ul>
+  <li>Квалифицированное имя класса пакета: обычно это фактический класс реализации определяемого бина.</li>
+  <li>Элементы конфигурации поведения бина, которые указывают, как бин должен вести себя в контейнере (область видимости, обратные вызовы жизненного цикла и т. д.).</li>
+  <li>Ссылки на другие бины, которые необходимы для работы данного бина. Эти ссылки также называются сотрудниками или зависимостями.</li>
+  <li>Другие настройки конфигурации, которые необходимо установить в вновь созданном объекте, например, лимит размера пула или количество соединений, которые следует использовать в бине, управляющем пулом соединений.</li>
+</ul>
+
+<p>В дополнение к определениям бинов, которые содержат информацию о том, как создать конкретный бин, реализации ApplicationContext также позволяют регистрировать существующие объекты, созданные вне контейнера (пользователями). Это делается путем доступа к BeanFactory ApplicationContext через метод getBeanFactory(), который возвращает реализацию DefaultListableBeanFactory. DefaultListableBeanFactory поддерживает эту регистрацию через методы registerSingleton(..) и registerBeanDefinition(..). Однако типичные приложения работают исключительно с бинами, определенными через обычные метаданные определения бинов.</p>
+
+<p>Метаданные бинов и вручную предоставленные экземпляры синглтонов необходимо регистрировать как можно раньше, чтобы контейнер мог правильно обрабатывать их во время автозаполнения и других этапов интроспекции. Хотя переопределение существующих метаданных и существующих экземпляров синглтонов поддерживается в определенной степени, регистрация новых бинов во время выполнения (параллельно с активным доступом к фабрике) официально не поддерживается и может привести к исключениям параллельного доступа, несогласованному состоянию в контейнере бинов или тому и другому.</p>
+
+<h2 id="переопределение-бинов">Переопределение бинов</h2>
+
+<p>Переопределение бина происходит, когда бин регистрируется с использованием идентификатора, который уже был выделен. Хотя переопределение бинов возможно, оно усложняет чтение конфигурации, и эта функция будет устаревать в будущих релизах.</p>
+
+<p>Чтобы полностью отключить переопределение бинов, вы можете установить флаг allowBeanDefinitionOverriding в значение false в ApplicationContext до его обновления. В таком случае будет выброшено исключение, если будет использовано переопределение бина.</p>
+
+<p>По умолчанию контейнер регистрирует каждое переопределение бина на уровне INFO, чтобы вы могли соответственно адаптировать свою конфигурацию. Хотя это не рекомендуется, вы можете отключить эти логи, установив флаг allowBeanDefinitionOverriding в значение true.</p>
+
+<h2 id="java-конфигурация">Java-конфигурация</h2>
+
+<p>Если вы используете Java-конфигурацию, соответствующий метод @Bean всегда тихо переопределяет сканируемый класс бина с тем же именем компонента, если тип возвращаемого значения метода @Bean совпадает с классом бина. Это просто означает, что контейнер будет вызывать метод фабрики @Bean в пользу любого заранее объявленного конструктора класса бина.</p>
+
+<h2 id="именование-бинов">Именование бинов</h2>
+
+<p>Каждый бин имеет один или несколько идентификаторов. Эти идентификаторы должны быть уникальными в контейнере, который содержит бин. Обычно у бина есть только один идентификатор. Однако, если требуется больше одного, дополнительные могут считаться псевдонимами.</p>
+
+<p>В метаданных конфигурации на основе XML вы используете атрибут id, атрибут name или оба, чтобы указать идентификаторы бинов. Атрибут id позволяет указать ровно один id. Обычно эти имена являются алфавитно-цифровыми (‘myBean’, ‘someService’ и т. д.), но они также могут содержать специальные символы. Если вы хотите ввести другие псевдонимы для бина, вы также можете указать их в атрибуте name, разделяя запятой (,), точкой с запятой (;) или пробелом. Хотя атрибут id определен как тип xsd:string, уникальность id бина обеспечивается контейнером, но не XML-парсерами.</p>
+
+<p>Вы не обязаны предоставлять имя или id для бина. Если вы не укажете имя или id явно, контейнер сгенерирует уникальное имя для этого бина. Однако, если вы хотите ссылаться на этот бин по имени, используя элемент ref или поиск в стиле Service Locator, вы должны предоставить имя. Мотивации для неуказания имени связаны с использованием внутренних бинов и автозаполнением сотрудников.</p>
+
+<h2 id="конвенции-именования-бинов">Конвенции именования бинов</h2>
+
+<p>Конвенция заключается в использовании стандартной Java-конвенции для имен полей экземпляров при именовании бинов. То есть, имена бинов начинаются с маленькой буквы и далее записываются в camelCase. Примеры таких имен включают accountManager, accountService, userDao, loginController и т. д.</p>
+
+<p>Последовательное именование бинов делает вашу конфигурацию более читаемой и понятной. Кроме того, если вы используете Spring AOP, это значительно упрощает применение советов к набору бинов, связанных по имени.</p>
+
+<p>С помощью сканирования компонентов в classpath Spring генерирует имена бинов для неназванных компонентов, следуя описанным ранее правилам: по сути, берется простое имя класса и его первый символ преобразуется в строчную букву. Однако в (необычном) специальном случае, когда более одного символа и оба первых символа являются заглавными, оригинальный регистр сохраняется. Это те же правила, которые определены в java.beans.Introspector.decapitalize (которые Spring использует в данном случае).</p>
+
+<h2 id="алиас-бина-вне-определения-бина">Алиас бина вне определения бина</h2>
+
+<p>В самом определении бина вы можете указать более одного имени для бина, используя комбинацию из одного имени, указанного в атрибуте id, и любого количества других имен в атрибуте name. Эти имена могут быть эквивалентными алиасами для одного и того же бина и полезны в некоторых ситуациях, например, позволяя каждому компоненту в приложении ссылаться на общую зависимость, используя имя бина, специфичное для этого компонента.</p>
+
+<p>Однако указание всех алиасов там, где бин фактически определен, не всегда является достаточным. Иногда необходимо ввести алиас для бина, который определен в другом месте. Это часто встречается в крупных системах, где конфигурация разделена между каждой подсистемой, и каждая подсистема имеет свой собственный набор определений объектов. В метаданных конфигурации на основе XML вы можете использовать элемент <code class="language-plaintext highlighter-rouge">&lt;alias/&gt;</code>, чтобы достичь этого. Следующий пример показывает, как это сделать:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;alias</span> <span class="na">name=</span><span class="s">"fromName"</span> <span class="na">alias=</span><span class="s">"toName"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>В этом случае бин (в том же контейнере) с именем fromName также может, после использования этого определения алиаса, быть упомянут как toName.</p>
+
+<p>Например, метаданные конфигурации для подсистемы A могут ссылаться на DataSource под именем subsystemA-dataSource. Метаданные конфигурации для подсистемы B могут ссылаться на DataSource под именем subsystemB-dataSource. При составлении основного приложения, которое использует обе эти подсистемы, основное приложение ссылается на DataSource под именем myApp-dataSource. Чтобы все три имени ссылались на один и тот же объект, вы можете добавить следующие определения алиасов в метаданные конфигурации:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;alias</span> <span class="na">name=</span><span class="s">"myApp-dataSource"</span> <span class="na">alias=</span><span class="s">"subsystemA-dataSource"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;alias</span> <span class="na">name=</span><span class="s">"myApp-dataSource"</span> <span class="na">alias=</span><span class="s">"subsystemB-dataSource"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Теперь каждый компонент и основное приложение могут ссылаться на dataSource через имя, которое уникально и гарантированно не будет конфликтовать с любым другим определением (фактически создавая пространство имен), при этом они ссылаются на один и тот же бин.</p>
+
+<p>Если вы используете Java-конфигурацию, аннотация @Bean может быть использована для предоставления алиасов.</p>
+
+<h2 id="создание-бинов">Создание бинов</h2>
+
+<p>Определение бина по сути является рецептом для создания одного или нескольких объектов. Контейнер обращается к рецепту для именованного бина по запросу и использует метаданные конфигурации, инкапсулированные в этом определении бина, для создания (или получения) фактического объекта.</p>
+
+<p>Если вы используете метаданные конфигурации на основе XML, вы указываете тип (или класс) объекта, который должен быть создан, в атрибуте class элемента <code class="language-plaintext highlighter-rouge">&lt;bean/&gt;</code>. Этот атрибут class (который внутренне является свойством Class в экземпляре BeanDefinition) обычно является обязательным. Вы можете использовать свойство Class одним из двух способов:</p>
+
+<ol>
+  <li>
+    <p>Обычно, чтобы указать класс бина, который будет создан в случае, если контейнер сам непосредственно создает бин, вызывая его конструктор рефлексивно, что несколько эквивалентно коду Java с оператором new.</p>
+  </li>
+  <li>
+    <p>Чтобы указать фактический класс, содержащий статический метод фабрики, который вызывается для создания объекта, в менее распространенном случае, когда контейнер вызывает статический метод фабрики на классе для создания бина. Тип объекта, возвращаемый при вызове статического метода фабрики, может быть тем же классом или совершенно другим классом.</p>
+  </li>
+</ol>
+
+<h2 id="имена-вложенных-классов">Имена вложенных классов</h2>
+
+<p>Если вы хотите настроить определение бина для вложенного класса, вы можете использовать либо двоичное имя, либо исходное имя вложенного класса.</p>
+
+<p>Например, если у вас есть класс под названием SomeThing в пакете com.example, и этот класс SomeThing имеет статический вложенный класс под названием OtherThing, они могут быть разделены знаком доллара ($) или точкой (.). Таким образом, значение атрибута class в определении бина будет com.example.SomeThing$OtherThing или com.example.SomeThing.OtherThing.</p>
+
+<h2 id="создание-с-помощью-конструктора">Создание с помощью конструктора</h2>
+
+<p>Когда вы создаете бин с помощью подхода конструктора, все обычные классы могут использоваться и совместимы с Spring. То есть класс, который разрабатывается, не должен реализовывать какие-либо специфические интерфейсы или быть закодированным определенным образом. Достаточно просто указать класс бина. Однако в зависимости от того, какой тип IoC вы используете для этого конкретного бина, вам может понадобиться конструктор по умолчанию (пустой).</p>
+
+<p>Контейнер IoC Spring может управлять практически любым классом, который вы хотите, чтобы он управлял. Он не ограничен управлением истинными JavaBeans. Большинство пользователей Spring предпочитают настоящие JavaBeans с только конструктором по умолчанию (без аргументов) и соответствующими сеттерами и геттерами, смоделированными по свойствам в контейнере. Вы также можете иметь более экзотические классы, не соответствующие стилю бина, в вашем контейнере. Если, например, вам нужно использовать устаревший пул соединений, который абсолютно не соответствует спецификации JavaBean, Spring также может управлять им.</p>
+
+<p>С помощью метаданных конфигурации на основе XML вы можете указать ваш класс бина следующим образом:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"exampleBean"</span> <span class="na">class=</span><span class="s">"examples.ExampleBean"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">name=</span><span class="s">"anotherExample"</span> <span class="na">class=</span><span class="s">"examples.ExampleBeanTwo"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Для получения подробной информации о механизме передачи аргументов в конструктор (если это необходимо) и установки свойств экземпляра объекта после его создания.</p>
+
+<p>В случае аргументов конструктора контейнер может выбрать соответствующий конструктор среди нескольких перегруженных конструкторов. Тем не менее, чтобы избежать неоднозначностей, рекомендуется сохранять сигнатуры ваших конструкторов как можно более простыми.</p>
+
+<h2 id="создание-с-помощью-статического-метода-фабрики">Создание с помощью статического метода фабрики</h2>
+
+<p>При определении бина, который вы создаете с помощью статического метода фабрики, используйте атрибут class, чтобы указать класс, содержащий статический метод фабрики, и атрибут с именем factory-method, чтобы указать имя самого метода фабрики. Вы должны иметь возможность вызвать этот метод (с необязательными аргументами, как описано позже) и вернуть живой объект, который затем будет рассматриваться так, как если бы он был создан через конструктор. Одно из применений такого определения бина — это вызов статических фабрик в устаревшем коде.</p>
+
+<p>Следующее определение бина указывает, что бин будет создан путем вызова метода фабрики. Определение не указывает тип (класс) возвращаемого объекта, а скорее класс, содержащий метод фабрики. В этом примере метод createInstance() должен быть статическим методом. Следующий пример показывает, как указать метод фабрики:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"clientService"</span>
+	<span class="na">class=</span><span class="s">"examples.ClientService"</span>
+	<span class="na">factory-method=</span><span class="s">"createInstance"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Следующий пример показывает класс, который будет работать с предыдущим определением бина:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClientService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">ClientService</span> <span class="n">clientService</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClientService</span><span class="o">();</span>
+	<span class="kd">private</span> <span class="nf">ClientService</span><span class="o">()</span> <span class="o">{}</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">ClientService</span> <span class="nf">createInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">clientService</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>В случае аргументов метода фабрики контейнер может выбрать соответствующий метод среди нескольких перегруженных методов с одинаковым именем. Тем не менее, чтобы избежать неоднозначностей, рекомендуется сохранять сигнатуры ваших методов фабрики как можно более простыми.</p>
+
+<p>Типичный проблемный случай с перегрузкой методов фабрики — это Mockito с его многочисленными перегрузками метода mock. Выбирайте наиболее специфичный вариант mock, который возможен:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"clientService"</span> <span class="na">class=</span><span class="s">"org.mockito.Mockito"</span> <span class="na">factory-method=</span><span class="s">"mock"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;constructor-arg</span> <span class="na">type=</span><span class="s">"java.lang.Class"</span> <span class="na">value=</span><span class="s">"examples.ClientService"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;constructor-arg</span> <span class="na">type=</span><span class="s">"java.lang.String"</span> <span class="na">value=</span><span class="s">"clientService"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+<h2 id="создание-с-использованием-метода-фабрики-экземпляра">Создание с использованием метода фабрики экземпляра</h2>
+
+<p>Аналогично созданию через статический метод фабрики, создание с помощью метода фабрики экземпляра вызывает нестатический метод существующего бина из контейнера для создания нового бина. Чтобы использовать этот механизм, оставьте атрибут class пустым, а в атрибуте factory-bean укажите имя бина в текущем (или родительском, или предковом) контейнере, который содержит экземпляр метода, который будет вызван для создания объекта. Установите имя самого метода фабрики с помощью атрибута factory-method. Следующий пример показывает, как настроить такой бин:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- the factory bean, which contains a method called createClientServiceInstance() --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"serviceLocator"</span> <span class="na">class=</span><span class="s">"examples.DefaultServiceLocator"</span><span class="nt">&gt;</span>
+	<span class="c">&lt;!-- inject any dependencies required by this locator bean --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- the bean to be created via the factory bean --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"clientService"</span>
+	<span class="na">factory-bean=</span><span class="s">"serviceLocator"</span>
+	<span class="na">factory-method=</span><span class="s">"createClientServiceInstance"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Следующий пример показывает соответствующий класс:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DefaultServiceLocator</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">ClientService</span> <span class="n">clientService</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClientServiceImpl</span><span class="o">();</span>
+
+	<span class="kd">public</span> <span class="nc">ClientService</span> <span class="nf">createClientServiceInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">clientService</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Один класс фабрики также может содержать более одного метода фабрики, как показывает следующий пример:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"serviceLocator"</span> <span class="na">class=</span><span class="s">"examples.DefaultServiceLocator"</span><span class="nt">&gt;</span>
+	<span class="c">&lt;!-- inject any dependencies required by this locator bean --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"clientService"</span>
+	<span class="na">factory-bean=</span><span class="s">"serviceLocator"</span>
+	<span class="na">factory-method=</span><span class="s">"createClientServiceInstance"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span>
+	<span class="na">factory-bean=</span><span class="s">"serviceLocator"</span>
+	<span class="na">factory-method=</span><span class="s">"createAccountServiceInstance"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>В следующем примере показан соответствующий класс:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DefaultServiceLocator</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">ClientService</span> <span class="n">clientService</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClientServiceImpl</span><span class="o">();</span>
+
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">AccountService</span> <span class="n">accountService</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccountServiceImpl</span><span class="o">();</span>
+
+	<span class="kd">public</span> <span class="nc">ClientService</span> <span class="nf">createClientServiceInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">clientService</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">AccountService</span> <span class="nf">createAccountServiceInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">accountService</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Этот подход показывает, что фабричный бин сам может управляться и настраиваться через внедрение зависимостей (DI).</p>
+
+<p>В документации Spring “фабричный бин” относится к бину, который настроен в контейнере Spring и который создает объекты через нестатический или статический метод фабрики. В отличие от этого, FactoryBean (обратите внимание на заглавные буквы) относится к классу реализации FactoryBean, специфичному для Spring.</p>
+
+<h2 id="определение-времени-выполнения-типа-бина">Определение времени выполнения типа бина</h2>
+
+<p>Определить тип конкретного бина во время выполнения не так просто. Указанный класс в метаданных определения бина является лишь начальной ссылкой на класс, потенциально комбинируемой с объявленным методом фабрики или являющейся классом FactoryBean, что может привести к другому типу бина во время выполнения, или вообще не устанавливаться в случае метода фабрики на уровне экземпляра (который разрешается через указанное имя factory-bean). Кроме того, проксирование AOP может обернуть экземпляр бина интерфейсным прокси с ограниченным доступом к фактическому типу целевого бина (только его реализованным интерфейсам).</p>
+
+<p>Рекомендуемый способ узнать фактический тип во время выполнения конкретного бина — это вызов BeanFactory.getType для указанного имени бина. Это учитывает все вышеперечисленные случаи и возвращает тип объекта, который вызов BeanFactory.getBean вернет для того же имени бина.</p>
+
+<p><a href="https://docs.spring.io/spring-framework/reference/core/beans/definition.html">оригинал</a></p>]]></content><author><name>Ринат Мамбетов</name></author><category term="spring" /><summary type="html"><![CDATA[Контейнер IoC Spring управляет одним или несколькими бинами. Эти бины создаются с использованием метаданных конфигурации, которые вы предоставляете контейнеру (например, в виде определений &lt;bean/&gt; в XML).]]></summary></entry><entry><title type="html">Spring IoC Container</title><link href="http://localhost:4000/spring/2024/07/19/spring-container-overview.html" rel="alternate" type="text/html" title="Spring IoC Container" /><published>2024-07-19T18:18:05+03:00</published><updated>2024-07-19T18:18:05+03:00</updated><id>http://localhost:4000/spring/2024/07/19/spring-container-overview</id><content type="html" xml:base="http://localhost:4000/spring/2024/07/19/spring-container-overview.html"><![CDATA[<p>Интерфейс org.springframework.context.ApplicationContext представляет собой контейнер Spring IoC и отвечает за инстанцирование, конфигурацию и сборку бинов. Контейнер получает инструкции о компонентах, которые необходимо инстанцировать, конфигурировать и собирать, считывая метаданные конфигурации. Метаданные конфигурации могут быть представлены в виде аннотированных классов компонентов, классов конфигурации с фабричными методами или внешних XML-файлов или скриптов Groovy. В любом из этих форматов вы можете составить свое приложение и богатые взаимозависимости между этими компонентами.</p>
 
 <h2 id="обзор-контейнера">Обзор контейнера</h2>
 
