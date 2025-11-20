@@ -18,9 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Мой блог о программировании
+title: Мой блог
 title_separator: "|"
-subtitle: "Version 1.0"
+subtitle: "Version 1.1"
 email: mambetovpost@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Dive into the world of programming with my latest blog post
@@ -35,6 +35,7 @@ enable_copy_code_button: true
 search: true
 timezone: Europe/Moscow
 include: ["_pages"]
+# teaser: /assets/images/java.jpg
 
 defaults:
   # _posts
@@ -60,7 +61,7 @@ defaults:
 author:
   name: "Ринат Мамбетов"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: "Программист — это вечный ученик, который каждый день открывает новые горизонты знаний"
+  bio: "Не стыдно не знать, стыдно не учиться"
   location: "Москва, Россия"
   links:
     - label: "GitHub"
