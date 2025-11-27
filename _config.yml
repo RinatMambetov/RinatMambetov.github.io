@@ -18,39 +18,31 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Мой блог
+title: Блог
 title_separator: "|"
-subtitle: "Version 1.1"
+subtitle: "Версия 1.1"
+name: "Rinat Mambetov"
 email: mambetovpost@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Dive into the world of programming with my latest blog post
+description: Dive into my world with my latest blog post
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://rinatmambetov.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  rinatmambetov
-name: "Rinat Mambetov"
 repository: "RinatMambetov/RinatMambetov.github.io"
-date_format: "%B %-d, %Y"
+date_format: "%d.%m.%Y"
 words_per_minute: 250
 enable_copy_code_button: true
 search: true
 timezone: Europe/Moscow
 include: ["_pages"]
-# teaser: /assets/images/java.jpg
+locale: "ru-RU"
+# breadcrumbs: true (бета не работает)
+# teaser: /assets/images/java.jpg (картинка сверху страницы)
+
+# head_scripts: (скрипты если нужны)
+#   - https://code.jquery.com/jquery-3.2.1.min.js
+#   - /assets/js/your-custom-head-script.js
 
 defaults:
-  # _posts
-  - scope:
-      path: ""
-      type: posts
-    values:
-      show_date: true
-      read_time: true
-      layout: single
-      # author_profile: true
-      # share: true
-      related: true
-      classes: wide
-
   # _pages
   - scope:
       path: ""
@@ -58,16 +50,89 @@ defaults:
     values:
       layout: single
 
+  # _philosophy
+  - scope:
+      path: ""
+      type: philosophy
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      show_date: true
+      share: false
+      classes: wide
+      related: false
+      comments: false
+
+  # _books
+  - scope:
+      path: ""
+      type: books
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      show_date: true
+      share: false
+      classes: wide
+      related: false
+      comments: false
+
+  # _movies
+  - scope:
+      path: ""
+      type: movies
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      show_date: true
+      share: false
+      classes: wide
+      related: false
+      comments: false
+
+  # _music
+  - scope:
+      path: ""
+      type: music
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      show_date: true
+      share: false
+      classes: wide
+      related: false
+      comments: false
+
+collections:
+  philosophy:
+    output: true
+    permalink: /:collection/:path/
+  books:
+    output: true
+    permalink: /:collection/:path/
+  movies:
+    output: true
+    permalink: /:collection/:path/
+  music:
+    output: true
+    permalink: /:collection/:path/
+
+atom_feed: # отключение RSS
+  hide: true
+
 author:
   name: "Ринат Мамбетов"
   avatar: "/assets/images/bio-photo.jpg"
-  bio: "Не стыдно не знать, стыдно не учиться"
+  bio: "«Мы — то, что мы постоянно делаем. Совершенство, следовательно, не действие, а привычка» Аристотель"
   location: "Москва, Россия"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/RinatMambetov"
-    - label: "VKontakte"
+    - label: "ВКонтакте"
       icon: "fab fa-fw fa-vk"
       url: "https://vk.com/rinatmambetov"
 
@@ -76,7 +141,7 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/RinatMambetov"
-    - label: "VKontakte"
+    - label: "ВКонтакте"
       icon: "fab fa-fw fa-vk"
       url: "https://vk.com/rinatmambetov"
 
@@ -86,15 +151,16 @@ compress_html:
     envs: development  # disable compression in dev environment
 
 # Build settings
-# theme: minima
 
-remote_theme: "mmistakes/minimal-mistakes@4.26.2"
-minimal_mistakes_skin: "air" #"default" "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+remote_theme: "mmistakes/minimal-mistakes@4.27.3"
+minimal_mistakes_skin: "dirt" #"air", "default" "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 plugins:
-  - jekyll-feed
+  # - jekyll-feed
   - jekyll-include-cache
   - jekyll-remote-theme
+  # - jekyll-paginate
+  # - jekyll-archives
 
 # Exclude from processing.
 # The following items will not be processed, by default.

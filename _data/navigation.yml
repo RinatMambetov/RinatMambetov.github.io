@@ -1,0 +1,9 @@
+main:
+  - title: "Фильмы"
+    url: /movies/
+  - title: "Книги"
+    url: /books/
+  - title: "Музыка"
+    url: /music/
+  - title: "Философия"
+    url: /philosophy/

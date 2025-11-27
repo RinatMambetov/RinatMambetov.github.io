@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Марк Аврелий - Наедине с собой - Книга вторая - 2"
-date: 2025-11-19 10:18:05 +0300
+date: 2025-11-19
 categories: philosophy
 ---
 
