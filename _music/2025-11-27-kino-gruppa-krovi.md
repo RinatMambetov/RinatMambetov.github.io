@@ -8,7 +8,6 @@ categories: music
 **Виктор Цой** написал текст и музыку, а также создал аранжировку для большинства инструментов. Существует версия, что идея названия могла возникнуть после разговора с **Всеволодом Гаккелем** (виолончелистом «Аквариума»), который однажды предложил Цою использовать фразу «группа крови» в качестве названия для группы.
 
 <iframe frameborder="0" allow="clipboard-write" style="border:none;width:614px;height:244px;" width="614" height="244" src="https://music.yandex.ru/iframe/album/10100/track/38634621">Слушайте <a href="https://music.yandex.ru/track/38634621?utm_source=web&utm_medium=copy_link">Группа крови</a> — <a href="https://music.yandex.ru/artist/41075">КИНО</a> на Яндекс Музыке</iframe>
-{: .align-center}
 
 ### История создания
 
