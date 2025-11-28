@@ -7,19 +7,19 @@
    ========================================================================== */
 
 @font-face {
-    font-family: 'Source_Sans_3';
-    src: url('../fonts/Source_Sans_3/static/SourceSans3-Regular.ttf') format('truetype');
-    // font-weight: 600;
-    font-style: normal;
-    font-display: swap; // Оптимизация загрузки
+   font-family: 'Source_Sans_3';
+   src: url('../fonts/Source_Sans_3/static/SourceSans3-Regular.ttf') format('truetype');
+   // font-weight: 600;
+   font-style: normal;
+   font-display: swap; // Оптимизация загрузки
 }
 
 @font-face {
-    font-family: 'TimesTen';
-    src: url('../fonts/TimesTen/Times-Roman-01.ttf') format('truetype');
-    // font-weight: 600;
-    font-style: normal;
-    font-display: swap; // Оптимизация загрузки
+   font-family: 'Georgia';
+   src: url('../fonts/Georgia/georgia.ttf') format('truetype');
+   // font-weight: 600;
+   font-style: normal;
+   font-display: swap; // Оптимизация загрузки
 }
 
 /*
@@ -73,8 +73,8 @@ $monospace-code: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consol
 $handwritten: 'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive;
 
 /* Defaults used in Minimal mistakes */
-$default-sans-serif: -apple-system, BlinkMacSystemFont, 'Source_Sans_3', "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
-$default-serif: 'Garamond', Georgia, Times, serif;
+$default-sans-serif: 'Source_Sans_3', "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+$default-serif: Georgia, 'Georgia', Times, serif;
 $default-monospace: Monaco, Consolas, "Lucida Console", monospace;
 
 /* Emoji native from modern font stack - add to the end of the font-face for native emojis */

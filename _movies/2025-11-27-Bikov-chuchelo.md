@@ -47,6 +47,6 @@ categories: movies
 
 "Чучело" — это суровый и бескомпромиссный урок **нравственности**. Он учит детей и взрослых **личной ответственности**, **смелости** идти против толпы, чтобы защитить правду, и **доброте**, которая может выстоять даже перед лицом самой чудовищной несправедливости. Это фильм-предупреждение о том, как легко общество может превратиться в толпу, и как важно сохранять в себе человечность.
 
-[Скачать Часть 1](https://1024terabox.com/s/1po8EE8NhHqZtyjfG3McfmA)
+<iframe src='https://my.mail.ru/video/embed/8350590169266520065' width='626' height='367' frameborder='0' scrolling='no' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-[Скачать Часть 2](https://1024terabox.com/s/1DdK3fq6M2KVrGhvMrw7qKg)
+<iframe src='https://my.mail.ru/video/embed/8350590169266520066' width='626' height='367' frameborder='0' scrolling='no' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
