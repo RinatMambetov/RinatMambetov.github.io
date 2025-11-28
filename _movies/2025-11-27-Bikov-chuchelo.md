@@ -47,10 +47,4 @@ categories: movies
 
 "Чучело" — это суровый и бескомпромиссный урок **нравственности**. Он учит детей и взрослых **личной ответственности**, **смелости** идти против толпы, чтобы защитить правду, и **доброте**, которая может выстоять даже перед лицом самой чудовищной несправедливости. Это фильм-предупреждение о том, как легко общество может превратиться в толпу, и как важно сохранять в себе человечность.
 
-<!-- <iframe src='https://my.mail.ru/video/embed/8350590169266520065' width='626' height='367' frameborder='0' scrolling='no' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-<iframe src='https://my.mail.ru/video/embed/8350590169266520066' width='626' height='367' frameborder='0' scrolling='no' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
-
-[Смотреть Серию 1](https://1024terabox.com/s/1xZL6cSqMYKoTz32PThoVag){:target="_blank"}
-
-[Смотреть Серию 2](https://1024terabox.com/s/1UALEUw4RtpszboJVUzIYow){:target="_blank"}
+[Смотреть](https://www.ivi.ru/watch/chuchelo?utm_source=share&utm_medium=direct&utm_campaign=2332219233)
